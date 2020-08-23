@@ -1,0 +1,9 @@
+version: '3'
+services:
+  vue-chat:
+    build: ./Dockerfiles/node/
+    tty: true
+    volumes:
+     - ./:/usr/src/app
+    ports:
+      - "1234:3000"
