@@ -7,6 +7,7 @@
       {{mounted()}}
       <li v-for="(message,index) in messages" :key="index">
           {{message.content}} index:{{index}}
+          <span @click="deleteMessage(index)">X</span>
       </li>
     </ul>
   </div>
@@ -54,6 +55,13 @@ export default {
     },
     mounted(){
           firebase.database().ref("slack").on("value", snapshot => (this.messages = snapshot.val()));
+    },
+    deleteMessage(index) {
+      firebase
+        .database()
+        .ref("slack")
+        .child(index)
+        .remove();
     }
   }
 };
