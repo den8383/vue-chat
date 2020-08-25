@@ -1,21 +1,19 @@
 docker_compose_up:
 	docker-compose up -d
 docker_compose_exec:
-	docker exec -it app-react_web_1 /bin/ash
+	docker exec -it vue_chat_vue-cat_1 sh
 docker_compose_prune:
 	docker system prune
 docker_compose_rm_all:
 	docker rm -f `docker ps -a -q`
 
-npx_create-react-app:
-	npx create-react-app my-app
-npm_run_build:
-	npm run build
-npm_start:
-	npm start
+vue_create-app:
+	vue create sample-chat
+vue_add_lib_vuetify:
+	vue add vuetify
 
 open_browser:
-	xdg-open http://0.0.0.0:3000
+	xdg-open http://0.0.0.0:1234
 
 install_heroku:
 	curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
