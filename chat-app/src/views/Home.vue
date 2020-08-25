@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     addMessage() {
-        firebase.database().ref("slack")
+        firebase.database().ref("open_chat_history")
         .push({
           content: this.message,
           user: {
@@ -54,12 +54,12 @@ export default {
         });
     },
     mounted(){
-          firebase.database().ref("slack").on("value", snapshot => (this.messages = snapshot.val()));
+          firebase.database().ref("open_chat_history").on("value", snapshot => (this.messages = snapshot.val()));
     },
     deleteMessage(index) {
       firebase
         .database()
-        .ref("slack")
+        .ref("open_chat_history")
         .child(index)
         .remove();
     }
