@@ -7,3 +7,4 @@ services:
      - ./:/usr/src/app
     ports:
       - "1234:8080"
+      - "2345:5000"
