@@ -1,0 +1,60 @@
+<template>
+  <div>
+    <h1>Firebase Test</h1>
+    <input v-model="message" />
+    <button @click="addMessage">メッセージを追加</button>
+    <ul>
+      {{mounted()}}
+      <li v-for="(message,index) in messages" :key="index">
+          {{message.content}} index:{{index}}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import firebase from "firebase/app";
+import "firebase/database";
+
+
+
+var firebaseConfig = {
+  apiKey: "AIzaSyA25O_qbC-XzDBRyR4s9W9t4CiEksfz9A0",
+  authDomain: "vue-chat-e20e7.firebaseapp.com",
+  databaseURL: "https://vue-chat-e20e7.firebaseio.com",
+  projectId: "vue-chat-e20e7",
+  storageBucket: "vue-chat-e20e7.appspot.com",
+  messagingSenderId: "274472843631",
+  appId: "1:274472843631:web:2fcb7f3c546e14259dd09a",
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+
+
+
+
+export default {
+  name: "Home",
+  data() {
+    return {
+      message: "",
+        messages:[]
+    };
+  },
+  methods: {
+    addMessage() {
+        firebase.database().ref("slack")
+        .push({
+          content: this.message,
+          user: {
+            name: "John Doe"
+          }
+        });
+    },
+    mounted(){
+          firebase.database().ref("slack").on("value", snapshot => (this.messages = snapshot.val()));
+    }
+  }
+};
+</script>
