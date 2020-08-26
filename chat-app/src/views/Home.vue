@@ -6,7 +6,7 @@
     <ul>
       {{mounted()}}
       <li v-for="(message,index) in messages" :key="index">
-          {{message.content}} index:{{index}}
+          index:{{index}} {{message.user}} {{message.content}} 
           <span @click="deleteMessage(index)">X</span>
       </li>
     </ul>
@@ -39,8 +39,10 @@ export default {
   name: "Home",
   data() {
     return {
-      message: "",
-        messages:[]
+        message: "",
+        messages:[],
+        name:"",
+        names:[]
     };
   },
   methods: {
