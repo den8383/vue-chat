@@ -6,7 +6,7 @@
     <ul>
       {{mounted()}}
       <li v-for="(message,index) in messages" :key="index">
-          index:{{index}} {{message.user}} {{message.content}} 
+          {{message.user.name}} {{message.content}} 
           <span @click="deleteMessage(index)">X</span>
       </li>
     </ul>
