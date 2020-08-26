@@ -19,6 +19,7 @@ import "firebase/database";
 
 
 
+
 var firebaseConfig = {
   apiKey: "AIzaSyA25O_qbC-XzDBRyR4s9W9t4CiEksfz9A0",
   authDomain: "vue-chat-e20e7.firebaseapp.com",
@@ -51,7 +52,7 @@ export default {
         .push({
           content: this.message,
           user: {
-            name: "John Doe"
+            name: "userNo." + Math.floor( Math.random() * 1000000 )
           }
         });
     },
