@@ -3,15 +3,35 @@
     <h1>Firebase Test</h1>
     <input v-model="message" />
     <button @click="addMessage">メッセージを追加</button>
-    <ul>
-      {{mounted()}}
-      <li v-for="(message,index) in messages" :key="index">
-          {{message.user.name}} {{message.content}} 
-          <span @click="deleteMessage(index)">X</span>
-      </li>
-    </ul>
+    <div id="message-box">
+        <ul id="message-list">
+          {{mounted()}}
+          <li id="message-line" v-for="(message,index) in messages" :key="index">
+              {{message.user.name}} {{message.content}}
+              <span @click="deleteMessage(index)">X</span>
+          </li>
+        </ul>
+    </div>
   </div>
 </template>
+
+<style>
+
+#message-box{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#message-list{
+    text-align: left;
+}
+#message-list span{
+    text-align: right;
+    color: red;
+}
+
+</style>
 
 <script>
 import firebase from "firebase/app";
