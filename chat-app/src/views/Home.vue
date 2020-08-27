@@ -42,7 +42,7 @@ export default {
     return {
         message: "",
         messages:[],
-        name:"",
+        name: "userNo." + Math.floor( Math.random() * 1000000 ),
         names:[]
     };
   },
@@ -52,7 +52,7 @@ export default {
         .push({
           content: this.message,
           user: {
-            name: "userNo." + Math.floor( Math.random() * 1000000 )
+            name: this.name
           }
         });
     },
