@@ -1,0 +1,89 @@
+<template>
+  <div>
+    <input v-model="message" />
+    <button @click="addMessage">メッセージを追加</button>
+  </div>
+  <div id="message-box">
+    <ul id="message-list">
+      {{mounted()}}
+      <li id="message-line" v-for="(message,index) in messages" :key="index">
+          {{message.user.name}} {{message.content}}
+          <span @click="deleteMessage(index)">X</span>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<style>
+
+#message-box{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#message-list{
+    text-align: left;
+}
+#message-list span{
+    text-align: right;
+    color: red;
+}
+
+</style>
+
+
+
+<script>
+import firebase from "firebase/app";
+import "firebase/database";
+
+
+
+
+
+var firebaseConfig = {
+  apiKey: "AIzaSyA25O_qbC-XzDBRyR4s9W9t4CiEksfz9A0",
+  authDomain: "vue-chat-e20e7.firebaseapp.com",
+  databaseURL: "https://vue-chat-e20e7.firebaseio.com",
+  projectId: "vue-chat-e20e7",
+  storageBucket: "vue-chat-e20e7.appspot.com",
+  messagingSenderId: "274472843631",
+  appId: "1:274472843631:web:2fcb7f3c546e14259dd09a",
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+
+
+
+
+export default {
+  name: "messageBox",
+  data() {
+    return {
+      message: "",
+      messages:[],
+      name: "userNo." + Math.floor( Math.random() * 1000000 ),
+      names:[]
+    };
+  },
+  methods: {
+    addMessage() {
+      firebase.database().ref("open_chat_history")
+        .push({
+          content: this.message,
+          user: {
+          name: this.name
+        }
+      });
+    },
+    mounted(){
+      firebase.database().ref("open_chat_history").on("value", snapshot => (this.messages = snapshot.val()));
+    },
+    deleteMessage(index) {
+      firebase.database().ref("open_chat_history").child(index).remove();
+    }
+  }
+};
+</script>
