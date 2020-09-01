@@ -1,8 +1,4 @@
 <template>
-  <div>
-    <input v-model="message" />
-    <button @click="addMessage">メッセージを追加</button>
-  </div>
   <div id="message-box">
     <ul id="message-list">
       {{mounted()}}
@@ -12,9 +8,16 @@
       </li>
     </ul>
   </div>
+  <div id="send-box">
+    <input v-model="message" />
+    <button @click="addMessage">メッセージを追加</button>
+  </div>
 </template>
 
 <style>
+#send-box{
+  bottom: 0;
+}
 
 #message-box{
     display: flex;
@@ -83,7 +86,7 @@ export default {
     },
     deleteMessage(index) {
       firebase.database().ref("open_chat_history").child(index).remove();
-    }
+    },
   }
 };
 </script>
