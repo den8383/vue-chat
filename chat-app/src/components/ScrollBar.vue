@@ -1,6 +1,6 @@
 <template>
   <div id="scroll-bar">
-    <button @click="moveToBottom">scroll</button>
+    <button @click="moveToTarget">scroll</button>
     <h1>ScrollBar</h1>
     <slot></slot>
   </div>
@@ -19,6 +19,9 @@
 
 export default {
   name: "ScrollBar",
+  props: {
+    scrollTarget: String
+  },
   data() {
     return {
     };
@@ -27,8 +30,9 @@ export default {
     tmpAlert(){
       alert("ScrollBar")
     },
-    moveToBottom(){
-      document.getElementById("scroll-bar").scroll(0,50);
+    moveToTarget(){
+      var bar = document.getElementById(this.scrollTarget);
+      bar.scrollIntoView();
     }
   }
 };

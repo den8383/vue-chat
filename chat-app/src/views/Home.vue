@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Firebase Test</h1>
-    <scrollBar>
+    <scrollBar scrollTarget="send-box">
       <messageBox></messageBox>
     </scrollBar>
   </div>
