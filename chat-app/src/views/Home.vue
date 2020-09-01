@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Firebase Test</h1>
+    <h1>real time chat</h1>
     <scrollBar scrollTarget="send-box">
       <messageBox></messageBox>
     </scrollBar>

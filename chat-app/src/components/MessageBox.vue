@@ -63,6 +63,8 @@ firebase.initializeApp(firebaseConfig);
 
 export default {
   name: "messageBox",
+  props:{
+  },
   data() {
     return {
       message: "",
