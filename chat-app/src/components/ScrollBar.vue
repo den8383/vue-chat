@@ -1,6 +1,6 @@
 <template>
+  <button @click="moveToTarget">scroll bottom</button>
   <div id="scroll-bar">
-    <button @click="moveToTarget">scroll</button>
     <h1>ScrollBar</h1>
     <slot></slot>
   </div>
