@@ -1,9 +1,7 @@
 <template>
   <div>
     <h1>real time chat</h1>
-    <scrollBar scrollTarget="send-box">
       <messageBox></messageBox>
-    </scrollBar>
   </div>
 </template>
 
@@ -13,7 +11,6 @@
 
 <script>
 
-import scrollBar from '@/components/ScrollBar.vue'
 import messageBox from '@/components/MessageBox.vue'
 
 
@@ -21,7 +18,6 @@ import messageBox from '@/components/MessageBox.vue'
 export default {
   name: "Home",
   components:{
-    scrollBar,
     messageBox
   },
 };

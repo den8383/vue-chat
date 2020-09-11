@@ -1,11 +1,13 @@
 <template>
   <div id="scroll-bar">
     <button @click="moveToTarget">scroll bottom</button>
+    <button @click="moveToSavePosition">moveToSavePosition</button>
     <div>
       <h1>ScrollBar</h1>
       <slot></slot>
     </div>
-    <button @click="savePosition()">savePosition</button>
+    <button @click="savePosition">savePosition</button>
+    <button @click="moveToSavePosition">moveToSavePosition</button>
   </div>
 </template>
 
@@ -25,6 +27,8 @@ export default {
   },
   data() {
     return {
+      positonX: 0,
+      positonY: 0
     };
   },
   methods: {
@@ -35,11 +39,13 @@ export default {
       var bar = document.getElementById(this.scrollTarget);
       bar.scrollIntoView();
     },
+    moveToSavePosition(){
+      alert(this.positonX.toString() + "," + this.positonY.toString())
+      window.scrollTo(this.positonX,this.positonY)
+    },
     savePosition(){
-      var positonX = window.scrollX
-      var positonY = window.scrollY
-      alert(positonX.toString() + "," + positonY.toString())
-      window.scrollTo(0,0)
+      this.positonX = window.scrollX
+      this.positonY = window.scrollY
     }
 
   }

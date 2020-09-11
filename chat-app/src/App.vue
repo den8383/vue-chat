@@ -4,7 +4,9 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <scrollBar scrollTarget="send-box">
+      <router-view/>
+    </scrollBar>
   </div>
 </template>
 
@@ -30,3 +32,21 @@
   color: #42b983;
 }
 </style>
+
+<script>
+
+import scrollBar from '@/components/ScrollBar.vue'
+
+export default {
+  name: "App",
+  components:{
+    scrollBar,
+  },
+};
+
+
+
+
+
+
+</script>
