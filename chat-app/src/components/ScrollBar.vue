@@ -1,15 +1,16 @@
 <template>
-  <button @click="moveToTarget">scroll bottom</button>
   <div id="scroll-bar">
-    <h1>ScrollBar</h1>
-    <slot></slot>
+    <button @click="moveToTarget">scroll bottom</button>
+    <div>
+      <h1>ScrollBar</h1>
+      <slot></slot>
+    </div>
+    <button @click="savePosition()">savePosition</button>
   </div>
 </template>
 
 <style>
 #scroll-bar{
-  height: 20rem;
-  overflow-y: scroll;
 }
 
 </style>
@@ -33,7 +34,14 @@ export default {
     moveToTarget(){
       var bar = document.getElementById(this.scrollTarget);
       bar.scrollIntoView();
+    },
+    savePosition(){
+      var positonX = window.scrollX
+      var positonY = window.scrollY
+      alert(positonX.toString() + "," + positonY.toString())
+      window.scrollTo(0,0)
     }
+
   }
 };
 </script>
