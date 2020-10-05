@@ -1,7 +1,8 @@
 <template>
   <div>
     <button @click="savePosition">savePosition</button>
-    <button @click="moveToSavePosition">moveToSavePosition</button>
+      <router-link to="/" @click="tmp">Home</router-link> |
+      <router-link to="/about" @click="savePosition">About</router-link>
   </div>
 </template>
 
@@ -15,7 +16,6 @@
 export default {
   name: "NavigationTab",
   props: {
-    scrollTarget: String
   },
   data() {
     return {
@@ -27,6 +27,9 @@ export default {
     savePosition(){
       this.positonX = window.scrollX
       this.positonY = window.scrollY
+    },
+    tmp(){
+      alert("aaaa")
     }
 
   }

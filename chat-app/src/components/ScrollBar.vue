@@ -19,17 +19,26 @@
 
 <script>
 
+import router from '@/router'
 
 export default {
   name: "ScrollBar",
   props: {
-    scrollTarget: String
+    scrollTarget: String,
+    positionX:Number,
+    positionY:Number,
   },
   data() {
     return {
-      positonX: 0,
-      positonY: 0
+      savedPositionX: this.positionX,
+      savedPositionY: this.positionY
     };
+  },
+  created(){
+    router.beforeEach(() => {
+      this.savePosition()
+    })
+
   },
   methods: {
     tmpAlert(){
@@ -40,12 +49,12 @@ export default {
       bar.scrollIntoView();
     },
     moveToSavePosition(){
-      alert(this.positonX.toString() + "," + this.positonY.toString())
-      window.scrollTo(this.positonX,this.positonY)
+      alert(this.savedPositionX.toString() + "," + this.savedPositionY.toString())
+      window.scrollTo(this.savedPositionX,this.savedPositionY)
     },
     savePosition(){
-      this.positonX = window.scrollX
-      this.positonY = window.scrollY
+      this.savedPositionX = window.scrollX
+      this.savedPositionY = window.scrollY
     }
 
   }

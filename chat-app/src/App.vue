@@ -4,9 +4,10 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <scrollBar scrollTarget="send-box">
+    <scrollBar :initialPositonX="0" :initialPositonY="0" scrollTarget="send-box">
       <router-view/>
     </scrollBar>
+    <navigationTab></navigationTab>
   </div>
 </template>
 
@@ -36,12 +37,14 @@
 <script>
 
 import scrollBar from '@/components/ScrollBar.vue'
+import navigationTab from '@/components/NavigationTab.vue'
 
 export default {
   name: "App",
   components:{
     scrollBar,
-  },
+    navigationTab
+  }
 };
 
 
