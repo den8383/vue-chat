@@ -25,13 +25,13 @@ export default {
   name: "ScrollBar",
   props: {
     scrollTarget: String,
-    initialPositonX:Number,
-    initialPositonY:Number,
+    positionX:Number,
+    positionY:Number,
   },
   data() {
     return {
-      positonX: this.initialPositonX,
-      positonY: this.initialPositonY
+      savedPositionX: this.positionX,
+      savedPositionY: this.positionY
     };
   },
   created(){
@@ -49,12 +49,12 @@ export default {
       bar.scrollIntoView();
     },
     moveToSavePosition(){
-      alert(this.positonX.toString() + "," + this.positonY.toString())
-      window.scrollTo(this.positonX,this.positonY)
+      alert(this.savedPositionX.toString() + "," + this.savedPositionY.toString())
+      window.scrollTo(this.savedPositionX,this.savedPositionY)
     },
     savePosition(){
-      this.positonX = window.scrollX
-      this.positonY = window.scrollY
+      this.savedPositionX = window.scrollX
+      this.savedPositionY = window.scrollY
     }
 
   }

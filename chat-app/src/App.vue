@@ -44,12 +44,7 @@ export default {
   components:{
     scrollBar,
     navigationTab
-  },
-  data() {
-    return {
-      name:"aaaa"
-    };
-  },
+  }
 };
 
 
