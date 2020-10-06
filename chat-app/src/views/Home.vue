@@ -1,24 +1,21 @@
 <template>
   <div>
-    <h1>real time chat</h1>
-      <messageBox></messageBox>
+    <p>ログイン中</p>
+    <div>
+      <button class="py-1 px-4 bg-gray-800 text-white rounded">サインアウト</button>
+    </div>
   </div>
 </template>
-
-<style>
-</style>
 
 
 <script>
 
-import messageBox from '@/components/MessageBox.vue'
 
 
 
 export default {
   name: "Home",
   components:{
-    messageBox
   },
 };
 </script>
