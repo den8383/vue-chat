@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="savePosition">savePosition</button>
       <router-link to="/" @click="tmp">Home</router-link> |
       <router-link to="/about" @click="savePosition">About</router-link>
   </div>
