@@ -1,13 +1,9 @@
 <template>
   <div id="scroll-bar">
-    <button @click="moveToTarget">scroll bottom</button>
-    <button @click="moveToSavePosition">moveToSavePosition</button>
     <div>
       <h1>ScrollBar</h1>
       <slot></slot>
     </div>
-    <button @click="savePosition">savePosition</button>
-    <button @click="moveToSavePosition">moveToSavePosition</button>
   </div>
 </template>
 
