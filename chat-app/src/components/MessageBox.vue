@@ -41,24 +41,14 @@
 import firebase from "firebase/app";
 import "firebase/database";
 
+import firebaseConfig from "@/assets/firebaseConfig.json"
+
+
+firebase.initializeApp(firebaseConfig[0]);
 
 
 
-
-var firebaseConfig = {
-  apiKey: "AIzaSyA25O_qbC-XzDBRyR4s9W9t4CiEksfz9A0",
-  authDomain: "vue-chat-e20e7.firebaseapp.com",
-  databaseURL: "https://vue-chat-e20e7.firebaseio.com",
-  projectId: "vue-chat-e20e7",
-  storageBucket: "vue-chat-e20e7.appspot.com",
-  messagingSenderId: "274472843631",
-  appId: "1:274472843631:web:2fcb7f3c546e14259dd09a",
-};
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-
-
 
 
 export default {
@@ -67,6 +57,7 @@ export default {
   },
   data() {
     return {
+      firebaseConfig: firebaseConfig,
       message: "",
       messages:[],
       name: "userNo." + Math.floor( Math.random() * 1000000 ),
