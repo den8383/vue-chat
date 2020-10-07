@@ -1,0 +1,11 @@
+[
+  {
+    "apiKey": "AIzaSyBCWs4fXp7dC30-BfQIENQX2uKJ-UbTLr0",
+    "authDomain": "vue-chat-open-chat.firebaseapp.com",
+    "databaseURL": "https://vue-chat-open-chat.firebaseio.com",
+    "projectId": "vue-chat-open-chat",
+    "storageBucket": "vue-chat-open-chat.appspot.com",
+    "messagingSenderId": "1074814513712",
+    "appId": "1:1074814513712:web:37cc7074eb2989fdaf33f5"
+  }
+]
