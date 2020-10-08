@@ -2,12 +2,14 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <router-link to="/free-chat">Free Chat</router-link> |
+      <router-link to="/register">Register</router-link>|
+      <router-link to="/signin">Sign in</router-link>|
     </div>
     <scrollBar :initialPositonX="0" :initialPositonY="0" scrollTarget="send-box">
       <router-view/>
     </scrollBar>
-    <navigationTab></navigationTab>
   </div>
 </template>
 
@@ -37,13 +39,15 @@
 <script>
 
 import scrollBar from '@/components/ScrollBar.vue'
-import navigationTab from '@/components/NavigationTab.vue'
+
+import firebase from "firebase/app";
+import firebaseConfig from "@/assets/firebaseConfig.json"
+firebase.initializeApp(firebaseConfig[0]);
 
 export default {
   name: "App",
   components:{
     scrollBar,
-    navigationTab
   }
 };
 

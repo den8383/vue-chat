@@ -41,10 +41,8 @@
 import firebase from "firebase/app";
 import "firebase/database";
 
-import firebaseConfig from "@/assets/firebaseConfig.json"
 
 
-firebase.initializeApp(firebaseConfig[0]);
 
 
 
@@ -57,7 +55,6 @@ export default {
   },
   data() {
     return {
-      firebaseConfig: firebaseConfig,
       message: "",
       messages:[],
       name: "userNo." + Math.floor( Math.random() * 1000000 ),
