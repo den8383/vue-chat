@@ -1,13 +1,13 @@
 <template>
-  <h1>regist</h1>
-  <form @submit.prevent="registerUser">
+  <h1>Sign In</h1>
+  <form @submit.prevent="signIn">
     <div>
       <input type="email" v-model="email" placeholder="your@email.com" />
     </div>
     <div>
       <input type="password" v-model="password" placeholder="password" />
     </div>
-    <button type="submit">Regist</button>
+    <button type="submit">Sign In</button>
   </form>
 </template>
 
@@ -19,7 +19,7 @@ import "firebase/auth";
 
 
 export default {
-  name: "register",
+  name: "signin",
   data() {
     return {
       email: "",
@@ -27,11 +27,11 @@ export default {
     };
   },
   methods: {
-    registerUser(){
-      alert(this.email+" "+this.password)
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(response => {
+    signIn(){
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(response => {
         console.log(response);
-      }).catch(e =>{
+        this.$router.push("/");
+      }).catch(e => {
         console.log(e);
       });
     }
