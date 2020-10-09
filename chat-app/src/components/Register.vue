@@ -8,6 +8,7 @@
       <input type="password" v-model="password" placeholder="password" />
     </div>
     <button type="submit">Regist</button>
+    <p>{{errors}}</p>
   </form>
 </template>
 
