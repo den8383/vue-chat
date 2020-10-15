@@ -10,6 +10,21 @@
     <button @click="directMessage(user.email)">{{user.email}}</button>
     <p>{{channel_name}}</p>
   </div>
+
+  <p>channel</p>
+  <div class="my-3">
+    <input
+      type="text"
+      class="w-full rounded border-gray-900 border-solid border p-3"
+      v-model="channel"
+    />
+  </div>
+  <div class="flex justify-end">
+    <button
+      class="px-8 py-2 rounded bg-green-900 font-bold text-white"
+      @click="addChannel"
+    >create</button>
+  </div>
 </template>
 
 
@@ -26,6 +41,8 @@ export default {
       user: "",
       users: [],
       channel_name: '',
+      channelModel: false,
+      channel: ""
     }
   },
   components:{
@@ -38,6 +55,17 @@ export default {
     },
     directMessage(email){
       this.channel_name = email;
+    },
+    addChannel(){
+      const newChannel = firebase.database().ref("channel").push();
+      const key_id = newChannel.key;
+      newChannel.set({
+        channel_name: this.channel,
+        id: key_id
+      }).then(() => {
+        this.channelModel = false;
+      });
+      this.channel = ''
     }
 
   },
