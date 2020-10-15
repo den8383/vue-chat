@@ -25,6 +25,10 @@
       @click="addChannel"
     >create</button>
   </div>
+
+  <div>
+    {{channels}}
+  </div>
 </template>
 
 
@@ -42,7 +46,8 @@ export default {
       users: [],
       channel_name: '',
       channelModel: false,
-      channel: ""
+      channel: "",
+      channels:[]
     }
   },
   components:{
@@ -74,6 +79,9 @@ export default {
     firebase.database().ref("users").on("child_added", snapshot => {
       this.users.push(snapshot.val());
     });
+    firebase.database().ref("channel").on("child_added", snapshot => {
+      this.channels.push(snapshot.val());
+    })
   },
   beforeUnmount(){
     firebase.database().ref("users").off()
