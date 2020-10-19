@@ -64,7 +64,7 @@ export default {
     return {
       message: "",
       messages:[],
-      name: "userNo." + Math.floor( Math.random() * 1000000 ),
+      name: "",
       names:[],
       channel: this.currentChannel,
       channels: []
@@ -81,10 +81,13 @@ export default {
       });
     },
     deleteMessage(index) {
-      firebase.database().ref("open_chat_history").child(index).remove();
+      firebase.database().ref("channel/"+this.channel+"/"+"messages").child(index).remove();
     },
   },
   mounted(){
+      firebase.auth().onAuthStateChanged(user => {
+        this.name = user.email
+      })
     firebase.database().ref("channel/"+this.channel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
     firebase.database().ref("channel").on("value", snapshot => (this.channels = snapshot.val()))
   }
