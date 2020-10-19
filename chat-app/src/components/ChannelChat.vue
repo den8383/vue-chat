@@ -11,13 +11,10 @@
     <input v-model="message" />
     <button @click="addMessage">メッセージを追加</button>
   </div>
-  <div>
-    <input v-model="channel" />
-  </div>
   <div id="channel-box">
     <ul id="channel-list">
-      <li id="channel-line" v-for="(channel,index) in channels" :key="index">
-          {{channel.channel_name}} 
+      <li id="channel-line" v-for="(channel_info,index) in channels" :key="index">
+          {{channel_info.id}} 
       </li>
     </ul>
   </div>
@@ -61,6 +58,7 @@ import "firebase/database";
 export default {
   name: "messageBox",
   props:{
+    currentChannel: String,
   },
   data() {
     return {
@@ -68,13 +66,13 @@ export default {
       messages:[],
       name: "userNo." + Math.floor( Math.random() * 1000000 ),
       names:[],
-      channel: "",
+      channel: this.currentChannel,
       channels: []
     };
   },
   methods: {
     addMessage() {
-      firebase.database().ref("open_chat_history")
+      firebase.database().ref("channel/"+this.channel+"/"+"messages")
         .push({
           content: this.message,
           user: {
@@ -87,7 +85,7 @@ export default {
     },
   },
   mounted(){
-    firebase.database().ref("open_chat_history").on("value", snapshot => (this.messages = snapshot.val()));
+    firebase.database().ref("channel/"+this.channel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
     firebase.database().ref("channel").on("value", snapshot => (this.channels = snapshot.val()))
   }
 };

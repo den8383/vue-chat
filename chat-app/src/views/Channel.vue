@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Channel</h1>
-    <messageBox></messageBox>
+    <messageBox v-bind:currentChannel="-MJkjpAVy3qqpr-qMSda"></messageBox>
   </div>
 </template>
 
