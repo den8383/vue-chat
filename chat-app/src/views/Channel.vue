@@ -2,6 +2,7 @@
   <div>
     <h1>Channel</h1>
     <messageBox v-bind:currentChannel="-MJkjpAVy3qqpr-qMSda"></messageBox>
+    <usersView></usersView>
   </div>
 </template>
 
@@ -12,13 +13,15 @@
 <script>
 
 import messageBox from '@/components/ChannelChat.vue'
+import usersView from '@/components/ChannelUsers.vue'
 
 
 
 export default {
   name: "Channel",
   components:{
-    messageBox
+    messageBox,
+    usersView
   },
 };
 </script>
