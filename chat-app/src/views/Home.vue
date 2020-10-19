@@ -75,7 +75,6 @@ export default {
 
   },
   mounted(){
-    this.user = firebase.auth().currentUser;
     firebase.database().ref("users").on("child_added", snapshot => {
       this.users.push(snapshot.val());
     });
