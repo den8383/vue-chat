@@ -31,6 +31,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/FreeChat.vue')
   },
   {
+    path: '/channel',
+    name: 'Channel',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Channel.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
