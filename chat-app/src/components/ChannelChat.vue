@@ -80,9 +80,6 @@ export default {
         }
       });
     },
-    deleteMessage(index) {
-      firebase.database().ref("channel/"+this.channel+"/"+"messages").child(index).remove();
-    },
   },
   mounted(){
       firebase.auth().onAuthStateChanged(user => {
