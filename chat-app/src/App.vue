@@ -7,6 +7,7 @@
       <router-link to="/register">Register</router-link>|
       <router-link to="/signin">Sign in</router-link>|
       <router-link to="/channel">channel-chat</router-link>|
+      <router-link to="/test">test</router-link>|
     </div>
     <scrollBar :initialPositonX="0" :initialPositonY="0" scrollTarget="send-box">
       <router-view/>

@@ -21,7 +21,7 @@ export default {
   name: "Channel",
   components:{
     messageBox,
-    usersView
+    usersView,
   },
 };
 </script>
