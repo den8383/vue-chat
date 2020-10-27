@@ -1,18 +1,33 @@
 <template>
-  <h1>User Info</h1>
+  <h1>Users</h1>
   <div v-for="user in users" :key="user.user_id">
-    <span>{{user.email}}, {{user.status}}</span>
+    <span>{{user.email}}</span>
+    <span :class="isOnline(user,connections) ? 'online-icon' : 'offline-icon'"></span>
   </div>
-  <h2>User</h2>
-  <h2>Connection</h2>
+<!--  <h2>OnlineUser</h2>
   <div v-for="user in connections" :key="user.user_id">
-    {{user}}
+    {{user.user_id}}
   </div>
-  <h2>connections</h2>
-  <span>{{connections}}</span>
+  !-->
 </template>
 
 <style>
+.online-icon{
+  border-radius: 50%;
+  background:lightgreen;
+  display: inline-block;
+  height:0.5em;
+  margin:auto 1em;
+  width:0.5em;
+}
+.offline-icon{
+  border-radius: 50%;
+  background:gray;
+  display: inline-block;
+  height:0.5em;
+  margin:auto 1em;
+  width:0.5em;
+}
 
 </style>
 
@@ -45,12 +60,20 @@ export default {
     };
   },
   methods: {
+    isOnline(user, connections){
+      if (connections.find(item => item.user_id === user.user_id) != undefined){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
   },
   mounted(){
     firebase.auth().onAuthStateChanged(user => {
       this.user = user;
     })
-    firebase.database().ref("users").on("value", snapshot => {
+    firebase.database().ref("users").on("child_added", snapshot => {
       this.users.push(snapshot.val())
     })
     firebase.database().ref(".info/connected").on("value", snapshot => {
