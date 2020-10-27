@@ -7,10 +7,9 @@
       <router-link to="/register">Register</router-link>|
       <router-link to="/signin">Sign in</router-link>|
       <router-link to="/channel">channel-chat</router-link>|
+      <router-link to="/test">test</router-link>|
     </div>
-    <scrollBar :initialPositonX="0" :initialPositonY="0" scrollTarget="send-box">
-      <router-view/>
-    </scrollBar>
+    <router-view/>
   </div>
 </template>
 
@@ -20,26 +19,23 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
 
 #nav {
-  padding: 30px;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: black;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: limegreen;
 }
 </style>
 
 <script>
 
-import scrollBar from '@/components/ScrollBar.vue'
 
 import firebase from "firebase/app";
 import firebaseConfig from "@/assets/firebaseConfig.json"
@@ -48,7 +44,6 @@ firebase.initializeApp(firebaseConfig[0]);
 export default {
   name: "App",
   components:{
-    scrollBar,
   }
 };
 

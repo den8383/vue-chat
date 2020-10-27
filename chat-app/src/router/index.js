@@ -52,7 +52,12 @@ const routes = [
     path: '/signin',
     name: 'Signin',
     component: () => import(/* webpackChunkName: "about" */ '../views/SigninPage.vue')
-  }
+  },
+  {
+    path: '/test',
+    name: 'TestOne',
+    component: () => import(/* webpackChunkName: "about" */ '../views/TestPage.vue')
+  },
 
 ]
 

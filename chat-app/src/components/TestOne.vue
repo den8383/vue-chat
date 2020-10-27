@@ -3,29 +3,6 @@
     <h1>ONE</h1>
     <input v-model="message" />
   </div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
-  <div>aaaaaaaaaaaa</div>
 </template>
 
 <style>
@@ -38,7 +15,6 @@
 export default {
   name: "testOne",
   props: {
-    scrollTarget: String
   },
   data() {
     return {

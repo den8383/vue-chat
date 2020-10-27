@@ -3,7 +3,7 @@
     <ul id="message-list">
       <li id="message-line" v-for="(message,index) in messages" :key="index">
           {{message.user.name}} {{message.content}}
-          <span @click="deleteMessage(index)">X</span>
+          <span @click="deleteMessage(index,message.user.name)">X</span>
       </li>
     </ul>
   </div>
@@ -80,8 +80,10 @@ export default {
         }
       });
     },
-    deleteMessage(index) {
-      firebase.database().ref("channel/"+this.channel+"/"+"messages").child(index).remove();
+    deleteMessage(index, name) {
+      if(this.name === name){
+        firebase.database().ref("channel/"+this.channel+"/"+"messages").child(index).remove();
+      }
     },
   },
   mounted(){
