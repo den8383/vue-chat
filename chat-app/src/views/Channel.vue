@@ -13,7 +13,7 @@
 <script>
 
 import messageBox from '@/components/ChannelChat.vue'
-import usersView from '@/components/ChannelUsers.vue'
+import usersView from '@/components/OnlineUsers.vue'
 
 
 
