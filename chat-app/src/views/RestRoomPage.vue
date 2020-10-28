@@ -6,7 +6,7 @@
     <usersView></usersView>
   </div>
   <div>
-    <channelSelector @change="changeChannel" ></channelSelector>
+    <channelSelector @change="changeChannel" databaseItem="restroom"></channelSelector>
   </div>
 </template>
 
