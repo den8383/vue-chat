@@ -2,7 +2,7 @@
   <div>
     <h2>Channel Name</h2>
     <h2>{{channel}}</h2>
-    <messageBox ref="messageBox" v-bind:currentChannel="channel"></messageBox>
+    <messageBox ref="messageBox" v-bind:currentChannel="channel" databaseItem="restroom"></messageBox>
     <usersView></usersView>
   </div>
   <div>
