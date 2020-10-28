@@ -61,7 +61,7 @@ export default {
     }
   },
   mounted(){
-    firebase.database().ref("channel").on("value", snapshot => (this.channels = snapshot.val()))
+    firebase.database().ref("restroom").on("value", snapshot => (this.channels = snapshot.val()))
   }
 };
 </script>
