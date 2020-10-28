@@ -1,7 +1,7 @@
 <template>
   <h2>rest</h2>
   <div class="room-group">
-    <singleRoom :restUsers="restUsers"></singleRoom>
+      <singleRoom  v-for="(restUser, index) in restUsers" :key="index" :restUser="restUser"></singleRoom>
   </div>
 </template>
 
@@ -9,8 +9,6 @@
 .room-group{
   display:flex;
   flex-wrap: wrap;
-  width:100%;
-  justify-content: center;
   margin:auto;
 }
 </style>
