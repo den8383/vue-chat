@@ -1,5 +1,6 @@
 <template>
   <h2>Channels</h2>
+  {{databaseItem}}
   <div id="channel-box">
     <ul id="channel-list">
       <li id="channel-line" v-for="(channel_info,index) in channels" :key="index">
@@ -35,6 +36,7 @@ import "firebase/database";
 export default {
   name: "channelSelector",
   props:{
+    databaseItem: String
   },
   data() {
     return {
@@ -45,7 +47,7 @@ export default {
   },
   methods: {
     addChannel(){
-      const newChannel = firebase.database().ref("channel").push();
+      const newChannel = firebase.database().ref(this.databaseItem).push();
       const key_id = newChannel.key;
       newChannel.set({
         channel_name: this.new_channel_name,
@@ -61,7 +63,7 @@ export default {
     }
   },
   mounted(){
-    firebase.database().ref("channel").on("value", snapshot => (this.channels = snapshot.val()))
+    firebase.database().ref(this.databaseItem).on("value", snapshot => (this.channels = snapshot.val()))
   }
 };
 </script>

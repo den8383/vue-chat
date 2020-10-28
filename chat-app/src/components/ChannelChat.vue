@@ -1,4 +1,7 @@
 <template>
+  <div>
+    {{databaseItem}}
+  </div>
   <div id="message-box">
     <ul id="message-list">
       <li id="message-line" v-for="(message,index) in messages" :key="index">
@@ -52,6 +55,7 @@ export default {
   name: "messageBox",
   props:{
     currentChannel: String,
+    databaseItem: String
   },
   data() {
     return {
@@ -65,7 +69,7 @@ export default {
   },
   methods: {
     addMessage() {
-      firebase.database().ref("channel/"+this.currentChannel+"/"+"messages")
+      firebase.database().ref(this.databaseItem+"/"+this.currentChannel+"/"+"messages")
         .push({
           content: this.message,
           user: {
@@ -75,19 +79,19 @@ export default {
     },
     deleteMessage(index, name) {
       if(this.name === name){
-        firebase.database().ref("channel/"+this.currentChannel+"/"+"messages").child(index).remove();
+        firebase.database().ref(this.databaseItem+"/"+this.currentChannel+"/"+"messages").child(index).remove();
       }
     },
     changeChannel(currentChannel){
-      firebase.database().ref("channel/"+currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
+      firebase.database().ref(this.databaseItem+"/"+currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
     }
   },
   mounted(){
       firebase.auth().onAuthStateChanged(user => {
         this.name = user.email
       })
-    firebase.database().ref("channel/"+this.currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
-    firebase.database().ref("channel").on("value", snapshot => (this.channels = snapshot.val()))
+    firebase.database().ref(this.databaseItem+"/"+this.currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
+    firebase.database().ref(this.databaseItem).on("value", snapshot => (this.channels = snapshot.val()))
   }
 };
 </script>

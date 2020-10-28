@@ -2,11 +2,11 @@
   <div>
     <h2>Channel Name</h2>
     <h2>{{channel}}</h2>
-    <messageBox ref="messageBox" v-bind:currentChannel="channel"></messageBox>
+    <messageBox ref="messageBox" v-bind:currentChannel="channel" databaseItem="restroom"></messageBox>
     <usersView></usersView>
   </div>
   <div>
-    <channelSelector @change="changeChannel" ></channelSelector>
+    <channelSelector @change="changeChannel" databaseItem="restroom"></channelSelector>
   </div>
 </template>
 
@@ -18,7 +18,7 @@
 
 import messageBox from '@/components/ChannelChat.vue'
 import usersView from '@/components/OnlineUsers.vue'
-import channelSelector from '@/components/ChannelSelector.vue'
+import channelSelector from '@/components/RestRoomSelector.vue'
 
 
 
