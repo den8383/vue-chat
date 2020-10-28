@@ -11,13 +11,6 @@
     <input v-model="message" />
     <button @click="addMessage">メッセージを追加</button>
   </div>
-  <div id="channel-box">
-    <ul id="channel-list">
-      <li id="channel-line" v-for="(channel_info,index) in channels" :key="index">
-          {{channel_info.id}} 
-      </li>
-    </ul>
-  </div>
 </template>
 
 <style>
@@ -72,7 +65,7 @@ export default {
   },
   methods: {
     addMessage() {
-      firebase.database().ref("channel/"+this.channel+"/"+"messages")
+      firebase.database().ref("channel/"+this.currentChannel+"/"+"messages")
         .push({
           content: this.message,
           user: {
@@ -82,15 +75,18 @@ export default {
     },
     deleteMessage(index, name) {
       if(this.name === name){
-        firebase.database().ref("channel/"+this.channel+"/"+"messages").child(index).remove();
+        firebase.database().ref("channel/"+this.currentChannel+"/"+"messages").child(index).remove();
       }
     },
+    changeChannel(currentChannel){
+      firebase.database().ref("channel/"+currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
+    }
   },
   mounted(){
       firebase.auth().onAuthStateChanged(user => {
         this.name = user.email
       })
-    firebase.database().ref("channel/"+this.channel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
+    firebase.database().ref("channel/"+this.currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
     firebase.database().ref("channel").on("value", snapshot => (this.channels = snapshot.val()))
   }
 };

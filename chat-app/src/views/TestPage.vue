@@ -1,11 +1,11 @@
 <template>
-    <usersView></usersView>
+  <test></test>
 </template>
 
 <script>
 
 
-import usersView from '@/components/OnlineUsers.vue'
+import test from '@/components/ChannelSelector'
 
 
 
@@ -19,7 +19,7 @@ export default {
   props:{
   },
   components:{
-    usersView
+    test
   },
   data() {
     return {
