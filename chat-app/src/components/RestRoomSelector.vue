@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     addChannel(){
-      const newChannel = firebase.database().ref("channel").push();
+      const newChannel = firebase.database().ref("restroom").push();
       const key_id = newChannel.key;
       newChannel.set({
         channel_name: this.new_channel_name,
