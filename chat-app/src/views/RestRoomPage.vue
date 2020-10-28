@@ -18,7 +18,7 @@
 
 import messageBox from '@/components/ChannelChat.vue'
 import usersView from '@/components/OnlineUsers.vue'
-import channelSelector from '@/components/ChannelSelector.vue'
+import channelSelector from '@/components/RestRoomSelector.vue'
 
 
 
