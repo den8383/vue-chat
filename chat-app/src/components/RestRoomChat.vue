@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{new_message}}
     {{databaseItem}}
   </div>
   <div id="message-box">
@@ -65,7 +66,8 @@ export default {
       name: "",
       names:[],
       channel: this.currentChannel,
-      channels: []
+      channels: [],
+      new_message: ""
     };
   },
   methods: {
@@ -84,14 +86,19 @@ export default {
       }
     },
     changeChannel(currentChannel){
-      firebase.database().ref(this.databaseItem+"/"+currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
+      firebase.database().ref(this.databaseItem+"/"+currentChannel+"/"+"messages").on("child_added", snapshot => {
+        this.new_message = snapshot.val()
+this.messages.push(this.new_message)
+      });
     }
   },
   mounted(){
       firebase.auth().onAuthStateChanged(user => {
         this.name = user.email
       })
-    firebase.database().ref(this.databaseItem+"/"+this.currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
+    firebase.database().ref(this.databaseItem+"/"+this.currentChannel+"/"+"messages").on("child_added", snapshot => {
+this.messages = (snapshot.val())
+    })
     firebase.database().ref(this.databaseItem).on("value", snapshot => (this.channels = snapshot.val()))
   }
 };
