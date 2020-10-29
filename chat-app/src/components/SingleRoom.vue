@@ -1,8 +1,11 @@
 <template>
   <div class="room-border">
+      <div>
+        {{restUser}}
+        <div v-if="messager === restUser">[{{message.content}}]</div>
+      </div>
     <div class="room">
       <img class="user-icon" src="@/assets/rest-user-icon.png" alt="">
-      {{restUser}}
     </div>
   </div>
 </template>
@@ -31,6 +34,8 @@ export default {
   name: "singleRoom",
   props:{
     restUser: String,
+    message: Object,
+    messager: String
   },
   data() {
     return {

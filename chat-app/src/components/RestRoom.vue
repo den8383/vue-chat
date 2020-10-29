@@ -1,7 +1,7 @@
 <template>
   <h2>rest</h2>
   <div class="room-group">
-      <singleRoom  v-for="(restUser, index) in restUsers" :key="index" :restUser="restUser"></singleRoom>
+    <singleRoom  v-for="(restUser, index) in restUsers" :key="index" :restUser="restUser" :message="message" :messager="messager"></singleRoom>
   </div>
 </template>
 
@@ -21,12 +21,16 @@ import singleRoom from '@/components/SingleRoom.vue'
 
 export default {
   name: "restRoom",
+  props: {
+    restUsers: Array,
+    message:String,
+    messager:String,
+  },
   components:{
     singleRoom
   },
   data() {
     return {
-      restUsers: ["test1", "test2", "test3", "test4"]
     };
   },
   methods: {

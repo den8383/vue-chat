@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{databaseItem}}
+    {{new_messager}}
   </div>
   <div id="message-box">
     <ul id="message-list">
@@ -15,6 +15,7 @@
     <input v-model="message" />
     <button @click="addMessage">メッセージを追加</button>
   </div>
+    <restRoom :restUsers="restUsers" :message="new_message" :messager="new_messager"></restRoom>
 </template>
 
 <style>
@@ -44,6 +45,7 @@
 import firebase from "firebase/app";
 import "firebase/database";
 
+import restRoom from '@/components/RestRoom.vue'
 
 
 
@@ -54,6 +56,9 @@ import "firebase/database";
 
 export default {
   name: "messageBox",
+  components:{
+    restRoom
+  },
   props:{
     currentChannel: String,
     databaseItem: String
@@ -65,7 +70,10 @@ export default {
       name: "",
       names:[],
       channel: this.currentChannel,
-      channels: []
+      channels: [],
+      new_message: "",
+      new_messager: "",
+      restUsers: ["test1", "test2", "aaaaaa@aaaaaa.com", "test4"],
     };
   },
   methods: {
@@ -84,14 +92,20 @@ export default {
       }
     },
     changeChannel(currentChannel){
-      firebase.database().ref(this.databaseItem+"/"+currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
+      firebase.database().ref(this.databaseItem+"/"+currentChannel+"/"+"messages").on("child_added", snapshot => {
+        this.new_message = snapshot.val()
+        this.new_messager = this.new_message.user.name
+this.messages.push(this.new_message)
+      });
     }
   },
   mounted(){
       firebase.auth().onAuthStateChanged(user => {
         this.name = user.email
       })
-    firebase.database().ref(this.databaseItem+"/"+this.currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
+    firebase.database().ref(this.databaseItem+"/"+this.currentChannel+"/"+"messages").on("child_added", snapshot => {
+this.messages = (snapshot.val())
+    })
     firebase.database().ref(this.databaseItem).on("value", snapshot => (this.channels = snapshot.val()))
   }
 };

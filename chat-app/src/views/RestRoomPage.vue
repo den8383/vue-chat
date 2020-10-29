@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Channel Name</h2>
-    <restRoom></restRoom>
+    <restRoom :restUsers="restUsers" :message="message"></restRoom>
     <messageBox ref="messageBox" v-bind:currentChannel="channel" databaseItem="restroom"></messageBox>
     <usersView></usersView>
   </div>
@@ -16,11 +16,10 @@
 
 <script>
 
-import messageBox from '@/components/ChannelChat.vue'
+import messageBox from '@/components/RestRoomChat.vue'
 import usersView from '@/components/OnlineUsers.vue'
 import channelSelector from '@/components/RestRoomSelector.vue'
 import restRoom from '@/components/RestRoom.vue'
-
 
 
 export default {
@@ -33,7 +32,10 @@ export default {
   },
   data(){
     return{
-      channel: ""
+      channel: "",
+      restUsers: ["test1", "test2", "test3", "test4"],
+      message: "hello"
+
     }
   },
   methods: {
