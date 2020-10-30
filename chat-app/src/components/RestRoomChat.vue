@@ -11,7 +11,7 @@
     </ul>
   </div>
   <slot :messages="messages"></slot>
-  <div id="send-box">
+  <div id="send-box" v-if="String(messages) !== String(empty)">
     <input v-model="message" />
     <button @click="addMessage">メッセージを追加</button>
   </div>
@@ -65,6 +65,7 @@ export default {
   },
   data() {
     return {
+      empty: [],
       message: "",
       messages:[],
       name: "",
@@ -92,10 +93,11 @@ export default {
       }
     },
     changeChannel(currentChannel){
+      this.messages = []
       firebase.database().ref(this.databaseItem+"/"+currentChannel+"/"+"messages").on("child_added", snapshot => {
         this.new_message = snapshot.val()
         this.new_messager = this.new_message.user.name
-this.messages.push(this.new_message)
+        this.messages.push(this.new_message)
       });
     }
   },
