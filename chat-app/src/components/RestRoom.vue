@@ -11,6 +11,11 @@
   flex-wrap: wrap;
   margin:auto;
 }
+@media screen and (min-width:768px){
+  .room-group{
+    width:50%;
+  }
+}
 </style>
 
 <script>
