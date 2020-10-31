@@ -1,21 +1,24 @@
 <template>
   <div>
-    {{new_messager}}
+    {{new_messanger}}
   </div>
-  <div id="message-box">
-    <ul id="message-list">
-      <li id="message-line" v-for="(message,index) in messages" :key="index">
-          {{message.user.name}} {{message.content}}
-          <span @click="deleteMessage(index,message.user.name)">X</span>
-      </li>
-    </ul>
-  </div>
+  <scrollBar v-if="String(messages) !== String(empty)" scrollTarget="scroll-target">
+    <div id="message-box">
+      <ul id="message-list">
+        <li id="message-line" v-for="(message,index) in messages" :key="index">
+            {{message.user.name}} {{message.content}}
+            <span @click="deleteMessage(index,message.user.name)">X</span>
+        </li>
+        <div id="scroll-target"></div>
+      </ul>
+    </div>
+  </scrollBar>
   <slot :messages="messages"></slot>
   <div id="send-box" v-if="String(messages) !== String(empty)">
     <input v-model="message" />
     <button @click="addMessage">メッセージを追加</button>
   </div>
-    <restRoom :restUsers="restUsers" :message="new_message" :messager="new_messager"></restRoom>
+    <restRoom :restUsers="restUsers" :message="new_message" :messager="new_messanger"></restRoom>
 </template>
 
 <style>
@@ -46,6 +49,7 @@ import firebase from "firebase/app";
 import "firebase/database";
 
 import restRoom from '@/components/RestRoom.vue'
+import scrollBar from '@/components/ScrollBar.vue'
 
 
 
@@ -57,7 +61,8 @@ import restRoom from '@/components/RestRoom.vue'
 export default {
   name: "messageBox",
   components:{
-    restRoom
+    restRoom,
+    scrollBar
   },
   props:{
     currentChannel: String,
@@ -74,7 +79,7 @@ export default {
       channel: this.currentChannel,
       channels: [],
       new_message: "",
-      new_messager: "",
+      new_messanger: "",
     };
   },
   methods: {
@@ -96,7 +101,7 @@ export default {
       this.messages = []
       firebase.database().ref(this.databaseItem+"/"+currentChannel+"/"+"messages").on("child_added", snapshot => {
         this.new_message = snapshot.val()
-        this.new_messager = this.new_message.user.name
+        this.new_messanger = this.new_message.user.name
         this.messages.push(this.new_message)
       });
     }
