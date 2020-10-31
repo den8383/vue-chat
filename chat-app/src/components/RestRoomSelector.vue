@@ -1,21 +1,25 @@
 <template>
-  <h2>Channels</h2>
-  {{databaseItem}}
   <div id="channel-box">
     <ul id="channel-list">
       <li id="channel-line" v-for="(channel_info,index) in channels" :key="index">
-          <button @click="changeChannel(channel_info.id)">{{channel_info.id}}</button> 
+          <button id="channel-font" @click="changeChannel(channel_info.id)">{{channel_info.id}}</button> 
       </li>
     </ul>
   </div>
-  <input type="text" v-model="new_channel_name"/>
-  <button @click="addChannel"
-  >create</button>
+  <input id="input-channel" type="text" v-model="new_channel_name"/>
+  <button @click="addChannel">create</button>
 </template>
 
 <style>
 #channel-list{
   list-style: none;
+}
+#channel-font{
+  font-size:0.8em;
+}
+#input-channel{
+  margin:0;
+  width:50%;
 }
 </style>
 
