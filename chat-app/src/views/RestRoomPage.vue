@@ -1,7 +1,9 @@
 <template>
+  {{restUsers}}
+  <button @click="reloadChannel">reload</button>
   <div>
     <h2>Rest Room</h2>
-    <messageBox ref="messageBox" v-bind:currentChannel="channel" databaseItem="restroom" :restUsers="testUser"></messageBox>
+    <messageBox ref="messageBox" v-bind:currentChannel="channel" databaseItem="restroom" :restUsers="restUsers"></messageBox>
   </div>
   <div id="users-and-channels">
     <div id="users">
@@ -47,9 +49,8 @@ export default {
   data(){
     return{
       channel: "",
-      restUsers: ["test1", "test2", "test3", "test4"],
+      restUsers: [],
       message: "hello",
-      testUser: []
 
     }
   },
@@ -57,8 +58,17 @@ export default {
     changeChannel(currentChannel){
       this.channel = currentChannel
       this.$refs.messageBox.changeChannel(this.channel)
-      this.testUser = this.$refs.onlineUser.getOnlineUsers()
+      this.changeOnlineUser()
+      setInterval(this.reloadChannel,500)
+    },
+    reloadChannel(){
+      this.changeChannel(this.channel)
+    },
+    changeOnlineUser(){
+      this.restUsers = this.$refs.onlineUser.getOnlineUsers()
     }
+  },
+  mounted(){
   }
 };
 </script>

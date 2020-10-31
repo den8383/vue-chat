@@ -67,11 +67,12 @@ export default {
         return true;
       }
       else{
+        this.onlineUsers.splice(this.onlineUsers.indexOf(user.email), 1)
         return false;
       }
     },
     getOnlineUsers(){
-      return this.onlineUsers.filter((x,i,self) => self.indexOf(x) === i);
+      return Array.from(new Set(this.onlineUsers))
     }
   },
   mounted(){
