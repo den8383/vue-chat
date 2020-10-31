@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{new_messanger}}
   </div>
   <scrollBar v-if="String(messages) !== String(empty)" scrollTarget="scroll-target">
     <div id="message-box">
@@ -14,11 +13,11 @@
     </div>
   </scrollBar>
   <slot :messages="messages"></slot>
-  <div id="send-box" v-if="String(messages) !== String(empty)">
+  <restRoom :restUsers="restUsers" :message="new_message" :messager="new_messanger"></restRoom>
+  <div id="send-box" v-if="String(currentChannel) !== String(empty)">
     <input v-model="message" />
     <button @click="addMessage">メッセージを追加</button>
   </div>
-    <restRoom :restUsers="restUsers" :message="new_message" :messager="new_messanger"></restRoom>
 </template>
 
 <style>
@@ -98,12 +97,11 @@ export default {
       }
     },
     changeChannel(currentChannel){
-      this.messages = []
       firebase.database().ref(this.databaseItem+"/"+currentChannel+"/"+"messages").on("child_added", snapshot => {
         this.new_message = snapshot.val()
         this.new_messanger = this.new_message.user.name
-        this.messages.push(this.new_message)
       });
+      firebase.database().ref(this.databaseItem+"/"+currentChannel+"/"+"messages").on("value", snapshot => (this.messages = snapshot.val()));
     }
   },
   mounted(){

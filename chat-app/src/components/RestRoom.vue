@@ -1,5 +1,4 @@
 <template>
-  <h2>rest</h2>
   <div class="room-group">
     <singleRoom  v-for="(restUser, index) in restUsers" :key="index" :restUser="restUser" :message="message" :messager="messager"></singleRoom>
   </div>

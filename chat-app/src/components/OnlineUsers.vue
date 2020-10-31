@@ -1,5 +1,4 @@
 <template>
-  <h1>Users</h1>
   <div v-for="user in users" :key="user.user_id">
     <span>{{user.email}}</span>
     <span :class="isOnline(user,connections) ? 'online-icon' : 'offline-icon'"></span>

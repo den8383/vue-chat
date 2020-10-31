@@ -1,16 +1,32 @@
 <template>
   <div>
-    {{testUser}}
-    <h2>Channel Name</h2>
+    <h2>Rest Room</h2>
     <messageBox ref="messageBox" v-bind:currentChannel="channel" databaseItem="restroom" :restUsers="testUser"></messageBox>
-    <usersView ref="onlineUser"></usersView>
   </div>
-  <div>
-    <channelSelector @change="changeChannel" databaseItem="restroom"></channelSelector>
+  <div id="users-and-channels">
+    <div id="users">
+      <p>user</p>
+      <usersView ref="onlineUser"></usersView>
+    </div>
+    <div id="channels">
+      <p>channel</p>
+      <channelSelector @change="changeChannel" databaseItem="restroom"></channelSelector>
+    </div>
   </div>
 </template>
 
 <style>
+#users-and-channels{
+  display:flex;
+  margin:auto;
+}
+#users{
+  margin:0 0 0 auto;
+}
+#channels{
+  margin:0 auto 0 0;
+  padding:0;
+}
 </style>
 
 
