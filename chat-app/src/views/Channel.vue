@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h2>Channel Name</h2>
-    <h2>{{channel}}</h2>
     <messageBox ref="messageBox" v-bind:currentChannel="channel" databaseItem="channel"></messageBox>
     <usersView></usersView>
   </div>

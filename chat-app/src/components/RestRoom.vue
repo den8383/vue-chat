@@ -12,7 +12,7 @@
 }
 @media screen and (min-width:768px){
   .room-group{
-    width:50%;
+    width:30%;
   }
 }
 </style>

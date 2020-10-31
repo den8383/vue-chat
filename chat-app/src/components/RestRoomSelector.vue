@@ -1,8 +1,9 @@
 <template>
+  <p>channel name: {{currentChannelName}}</p>
   <div id="channel-box">
     <ul id="channel-list">
       <li id="channel-line" v-for="(channel_info,index) in channels" :key="index">
-          <button id="channel-font" @click="changeChannel(channel_info.id)">{{channel_info.id}}</button> 
+          <button id="channel-font" @click="changeChannel(channel_info.id, channel_info.channel_name)">{{channel_info.channel_name}}</button> 
       </li>
     </ul>
   </div>
@@ -46,6 +47,7 @@ export default {
     return {
       channels: [],
       currentChannel: "",
+      currentChannelName: "",
       new_channel_name: "",
     };
   },
@@ -61,8 +63,9 @@ export default {
       });
       this.new_channel_name = ''
     },
-    changeChannel(channelName){
-      this.currentChannel = channelName
+    changeChannel(channelID, channelName){
+      this.currentChannel = channelID
+      this.currentChannelName = channelName
       this.$emit("change",this.currentChannel)
     }
   },

@@ -11,7 +11,7 @@
     </ul>
   </div>
   <slot :messages="messages"></slot>
-  <div id="send-box">
+  <div id="send-box" v-if="String(currentChannel) !== String(empty)">
     <input v-model="message" />
     <button @click="addMessage">メッセージを追加</button>
   </div>
@@ -60,6 +60,7 @@ export default {
   },
   data() {
     return {
+      empty: [],
       message: "",
       messages:[],
       name: "",
