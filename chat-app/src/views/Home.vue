@@ -1,34 +1,14 @@
 <template>
   <div>
+    <h2>your name</h2>
+    <p> {{user}}</p>
     <p>ログイン中</p>
     <div>
       <button class="py-1 px-4 bg-gray-800 text-white" @click=signOut>サインアウト</button>
     </div>
-    <p>you {{user.email}}</p>
-    <p>----------</p>
-    <p>{{users}}</p>
-    <button @click="directMessage(user.email)">{{user.email}}</button>
-    <p>{{channel_name}}</p>
   </div>
 
-  <p>channel</p>
-  <div class="my-3">
-    <input
-      type="text"
-      class="w-full rounded border-gray-900 border-solid border p-3"
-      v-model="channel"
-    />
-  </div>
-  <div class="flex justify-end">
-    <button
-      class="px-8 py-2 rounded bg-green-900 font-bold text-white"
-      @click="addChannel"
-    >create</button>
-  </div>
 
-  <div>
-    {{channels}}
-  </div>
 </template>
 
 
@@ -75,6 +55,9 @@ export default {
 
   },
   mounted(){
+    firebase.auth().onAuthStateChanged(user => {
+      this.user = user.email
+    })
     firebase.database().ref("users").on("child_added", snapshot => {
       this.users.push(snapshot.val());
     });

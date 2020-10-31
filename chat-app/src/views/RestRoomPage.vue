@@ -1,6 +1,4 @@
 <template>
-  {{restUsers}}
-  <button @click="reloadChannel">reload</button>
   <div>
     <h2>Rest Room</h2>
     <messageBox ref="messageBox" v-bind:currentChannel="channel" databaseItem="restroom" :restUsers="restUsers"></messageBox>
