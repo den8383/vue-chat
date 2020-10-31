@@ -57,7 +57,7 @@ export default {
       this.channel = currentChannel
       this.$refs.messageBox.changeChannel(this.channel)
       this.changeOnlineUser()
-      setInterval(this.reloadChannel,500)
+      setInterval(this.reloadChannel,1000)
     },
     reloadChannel(){
       this.changeChannel(this.channel)
