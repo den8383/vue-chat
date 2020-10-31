@@ -1,7 +1,6 @@
 <template>
   <div id="scroll-bar">
     <div>
-      <h1>ScrollBar</h1>
       <slot></slot>
     </div>
   </div>
@@ -9,6 +8,11 @@
 
 <style>
 #scroll-bar{
+  overflow:hidden;
+  overflow-y:scroll;
+  margin:auto;
+  width: 50%;
+  height: 10rem;
 }
 
 </style>
@@ -53,6 +57,9 @@ export default {
       this.savedPositionY = window.scrollY
     }
 
+  },
+  mounted(){
+    this.moveToTarget()
   }
 };
 </script>
