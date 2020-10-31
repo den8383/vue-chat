@@ -61,7 +61,8 @@ export default {
   },
   props:{
     currentChannel: String,
-    databaseItem: String
+    databaseItem: String,
+    restUsers: Array,
   },
   data() {
     return {
@@ -74,7 +75,6 @@ export default {
       channels: [],
       new_message: "",
       new_messager: "",
-      restUsers: ["test1", "test2", "aaaaaa@aaaaaa.com", "test4"],
     };
   },
   methods: {

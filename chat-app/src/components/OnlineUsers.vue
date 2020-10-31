@@ -53,6 +53,7 @@ export default {
     return {
       user: "",
       users: [],
+      onlineUsers:[],
       ref: [],
       connectionRef: firebase.database().ref("connections"),
       connection_key: "",
@@ -61,12 +62,17 @@ export default {
   },
   methods: {
     isOnline(user, connections){
+      
       if (connections.find(item => item.user_id === user.user_id) != undefined){
+        this.onlineUsers.push(user.email)
         return true;
       }
       else{
         return false;
       }
+    },
+    getOnlineUsers(){
+      return this.onlineUsers.filter((x,i,self) => self.indexOf(x) === i);
     }
   },
   mounted(){
