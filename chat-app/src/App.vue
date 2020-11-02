@@ -6,8 +6,10 @@
       <router-link to="register">Regist</router-link> |
       <router-link to="signin">Sign In</router-link> |
       <router-link to="signout">Sign Out</router-link> |
+      <router-link to="signout">Sign Out</router-link> |
+      <router-link to="online">online</router-link> |
     </div>
-    <router-view :user="user" :users="users"></router-view>
+    <router-view :user="user" :users="users" :connections="connections"></router-view>
   </div>
 </template>
 
@@ -52,7 +54,6 @@ export default {
       connections: [],
       connectionRef: firebase.database().ref("connections"),
       connection_key: "",
-      channel: ""
     }
   },
   methods:{

@@ -16,7 +16,7 @@ export default {
   name: "Home",
   props: {
     user: String,
-    users: []
+    users: Array
   }
 };
 </script>

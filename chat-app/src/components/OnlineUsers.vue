@@ -33,77 +33,24 @@
 
 
 <script>
-import firebase from "firebase/app";
-import "firebase/database";
 
-
-
-
-
-
-// Initialize Firebase
 
 
 export default {
   name: "channelUsers",
   props:{
-  },
-  data() {
-    return {
-      user: "",
-      users: [],
-      onlineUsers:[],
-      ref: [],
-      connectionRef: firebase.database().ref("connections"),
-      connection_key: "",
-      connections: []
-    };
+    users: Array,
+    connections: Array
   },
   methods: {
     isOnline(user, connections){
-      
       if (connections.find(item => item.user_id === user.user_id) != undefined){
-        this.onlineUsers.push(user.email)
         return true;
       }
       else{
-        this.onlineUsers.splice(this.onlineUsers.indexOf(user.email), 1)
         return false;
       }
     },
-    getOnlineUsers(){
-      return Array.from(new Set(this.onlineUsers))
-    }
   },
-  mounted(){
-    firebase.auth().onAuthStateChanged(user => {
-      this.user = user;
-    })
-    firebase.database().ref("users").on("child_added", snapshot => {
-      this.users.push(snapshot.val())
-    })
-    firebase.database().ref(".info/connected").on("value", snapshot => {
-      if (snapshot.val() === true){
-        this.ref = this.connectionRef.push();
-        this.connection_key = this.ref.key;
-        this.ref.onDisconnect().remove();
-        this.ref.set({
-          user_id: this.user.uid,
-          key:this.connection_key
-        })
-        firebase.database().ref("connections").on("child_added", snapshot => {
-          this.connections.push(snapshot.val())
-        })
-        firebase.database().ref("connections").on("child_removed", snapshot => {
-          let remove_connection = snapshot.val();
-          this.connections = this.connections.filter(
-            connection => connection.user_id !== remove_connection.user_id
-            )
-        })
-      }
-    })
-  },
-  beforeUnmount(){
-  }
 };
 </script>
