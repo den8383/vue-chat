@@ -1,14 +1,13 @@
 <template>
+  {{connections}}
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/free-chat">Free Chat</router-link> |
-      <router-link to="/register">Register</router-link>|
-      <router-link to="/signin">Sign in</router-link>|
-      <router-link to="/channel">Channel</router-link>|
-      <router-link to="/rest">Rest Room</router-link>|
+      <router-link to="register">Regist</router-link> |
+      <router-link to="signin">Sign In</router-link> |
+      <router-link to="signout">Sign Out</router-link> |
     </div>
-    <router-view/>
+    <router-view :user="user" :users="users"></router-view>
   </div>
 </template>
 
@@ -37,12 +36,66 @@
 
 
 import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 import firebaseConfig from "@/assets/firebaseConfig.json"
 firebase.initializeApp(firebaseConfig[0]);
 
 export default {
   name: "App",
   components:{
+  },
+  data(){
+    return {
+      user: "",
+      users: [],
+      connections: [],
+      connectionRef: firebase.database().ref("connections"),
+      connection_key: "",
+      channel: ""
+    }
+  },
+  methods:{
+    setCurrentUser(){
+      firebase.auth().onAuthStateChanged(user => {
+        this.user = user
+      });
+    },
+    setCurrentUsers(){
+      firebase.database().ref("users").on("child_added", snapshot => {
+        this.users.push(snapshot.val());
+      });
+    },
+    setConnections(){
+      firebase.database().ref(".info/connected").on("value", snapshot => {
+        if (snapshot.val() === true){
+          let ref = this.connectionRef.push();
+          this.connection_key = ref.key;
+          ref.onDisconnect().remove();
+          ref.set({
+            user_id: this.user.uid,
+            key:this.connection_key
+          })
+          firebase.database().ref("connections").on("child_added", snapshot => {
+            this.connections.push(snapshot.val())
+          })
+          firebase.database().ref("connections").on("child_removed", snapshot => {
+            let remove_connection = snapshot.val();
+            this.connections = this.connections.filter(
+              connection => connection.user_id !== remove_connection.user_id
+              )
+          })
+        }
+      })
+    },
+  },
+  mounted(){
+    this.setCurrentUser()
+    this.setCurrentUsers()
+    this.setConnections()
+  },
+  beforeUnmount(){
+    firebase.database().ref(".info/connected").off();
   }
 };
 

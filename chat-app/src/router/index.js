@@ -1,29 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 
-import Home from '../views/Home.vue'
 
-import firebase from "firebase/app";
-import "firebase/database";
 
-import "firebase/auth";
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
-    beforeEnter: (to, from, next) => {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          alert(user.email)
-          next()
-        } else {
-          alert("bbbb")
-          next("/signin")
-        }
-      });
-    }
+    component: () => import('../views/NewHome.vue'),
   },
   {
     path: '/free-chat',
@@ -57,6 +42,11 @@ const routes = [
     path: '/signin',
     name: 'Signin',
     component: () => import(/* webpackChunkName: "about" */ '../views/SigninPage.vue')
+  },
+  {
+    path: '/signout',
+    name: 'Signout',
+    component: () => import(/* webpackChunkName: "about" */ '../views/SignoutPage.vue')
   },
   {
     path: '/test',
