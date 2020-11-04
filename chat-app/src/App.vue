@@ -1,15 +1,20 @@
 <template>
+  <h2>{{channel}}</h2>
   {{connections}}
   <div id="app">
+    {{channels}}
     <div id="nav">
+      <input type="text" v-model="newChannelName">
+      <button @click="addChannel">create</button>
       <router-link to="/">Home</router-link> |
       <router-link to="register">Regist</router-link> |
       <router-link to="signin">Sign In</router-link> |
       <router-link to="signout">Sign Out</router-link> |
-      <router-link to="signout">Sign Out</router-link> |
       <router-link to="online">online</router-link> |
+      <router-link to="workspace">work space</router-link> |
+      <router-link to="channel">channel</router-link> |
     </div>
-    <router-view :user="user" :users="users" :connections="connections"></router-view>
+    <router-view :user="user" :users="users" :connections="connections" :channels="channels" @selected-channel="setChannel"></router-view>
   </div>
 </template>
 
@@ -54,6 +59,9 @@ export default {
       connections: [],
       connectionRef: firebase.database().ref("connections"),
       connection_key: "",
+      channel: "",
+      channels: [],
+      newChannelName: ""
     }
   },
   methods:{
@@ -89,20 +97,35 @@ export default {
         }
       })
     },
+    setDisConnections(){
+      firebase.database().ref(".info/connected").off();
+    },
+    addChannel(){
+      const newChannel = firebase.database().ref("channel").push();
+      const key_id = newChannel.key;
+      newChannel.set({
+        channel_name: this.newChannelName,
+        id: key_id
+      })
+      this.newChannelName = ''
+    },
+    setChannels(){
+      firebase.database().ref("channel").on("value", snapshot => (this.channels = snapshot.val()))
+    },
+    setChannel(selectedChannel){
+      this.channel = selectedChannel
+    }
   },
   mounted(){
     this.setCurrentUser()
     this.setCurrentUsers()
     this.setConnections()
+    this.setChannels()
   },
   beforeUnmount(){
-    firebase.database().ref(".info/connected").off();
+    this.setDisConnections()
   }
 };
-
-
-
-
 
 
 </script>

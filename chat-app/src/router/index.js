@@ -18,7 +18,7 @@ const routes = [
   {
     path: '/channel',
     name: 'Channel',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Channel.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/ChannelPage.vue')
   },
   {
     path: '/rest',
@@ -52,6 +52,11 @@ const routes = [
     path: '/online',
     name: 'online',
     component: () => import(/* webpackChunkName: "about" */ '../views/OnlineUsersPage.vue')
+  },
+  {
+    path: '/workspace',
+    name: 'workspace',
+    component: () => import(/* webpackChunkName: "about" */ '../views/WorkSpacePage.vue')
   },
   {
     path: '/test',
