@@ -14,7 +14,7 @@
       <router-link to="workspace">work space</router-link> |
       <router-link to="channel">channel</router-link> |
     </div>
-    <router-view :user="user" :users="users" :connections="connections" :channels="channels" @selected-channel="setChannel"></router-view>
+    <router-view :user="user" :users="users" :connections="connections" :channels="channels" @selected-channel="setChannel" @added-channel="addChannel"></router-view>
   </div>
 </template>
 
@@ -61,7 +61,6 @@ export default {
       connection_key: "",
       channel: "",
       channels: [],
-      newChannelName: ""
     }
   },
   methods:{
@@ -100,14 +99,13 @@ export default {
     setDisConnections(){
       firebase.database().ref(".info/connected").off();
     },
-    addChannel(){
+    addChannel(newChannelName){
       const newChannel = firebase.database().ref("channel").push();
       const key_id = newChannel.key;
       newChannel.set({
-        channel_name: this.newChannelName,
+        channel_name: newChannelName,
         id: key_id
       })
-      this.newChannelName = ''
     },
     setChannels(){
       firebase.database().ref("channel").on("value", snapshot => (this.channels = snapshot.val()))

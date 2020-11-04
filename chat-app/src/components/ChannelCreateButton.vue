@@ -1,5 +1,5 @@
 <template>
-  <input id="input-channel" type="text" v-model="new_channel_name"/>
+  <input id="input-channel" type="text" v-model="newChannelName"/>
   <button @click="addChannel">create</button>
 </template>
 
@@ -14,8 +14,6 @@
 
 <script>
 
-import firebase from "firebase/app";
-import "firebase/database";
 
 
 
@@ -36,13 +34,8 @@ export default {
   },
   methods: {
     addChannel(){
-      const newChannel = firebase.database().ref(this.databaseItem).push();
-      const key_id = newChannel.key;
-      newChannel.set({
-        channel_name: this.newChannelName,
-        id: key_id
-      })
-      this.newChannelName = ''
+      this.$emit("added-channel",this.newChannelName)
+      this.newChannelName = ""
     },
   },
   mounted(){

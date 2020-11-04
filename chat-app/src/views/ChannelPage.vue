@@ -1,6 +1,6 @@
 <template>
   <div>channel</div>
-  <channelCreateButton @add="addChannel" databaseItem="channel"></channelCreateButton>
+  <channelCreateButton @added-channel="addChannel" databaseItem="channel"></channelCreateButton>
   <div>
     <ul>
       <li v-for="(channel, index) in channels" :key="index">
@@ -35,8 +35,8 @@ export default {
     }
   },
   methods: {
-    addChannel(){
-      this.$emit("add-channel")
+    addChannel(newChannelName){
+      this.$emit("added-channel",newChannelName)
     },
     channelSelected(selectedChannel){
       this.$emit("selected-channel", selectedChannel)
