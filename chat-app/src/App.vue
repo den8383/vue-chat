@@ -1,11 +1,10 @@
 <template>
+  {{messages}}
   <h2>{{channel}}</h2>
   {{connections}}
   <div id="app">
     {{channels}}
     <div id="nav">
-      <input type="text" v-model="newChannelName">
-      <button @click="addChannel">create</button>
       <router-link to="/">Home</router-link> |
       <router-link to="register">Regist</router-link> |
       <router-link to="signin">Sign In</router-link> |
@@ -14,7 +13,7 @@
       <router-link to="workspace">work space</router-link> |
       <router-link to="channel">channel</router-link> |
     </div>
-    <router-view :user="user" :users="users" :connections="connections" :channels="channels" @selected-channel="setChannel" @added-channel="addChannel"></router-view>
+    <router-view :user="user" :users="users" :connections="connections" :channels="channels" @selected-channel="setChannelAndMessages" @added-channel="addChannel" :messages="messages"></router-view>
   </div>
 </template>
 
@@ -61,6 +60,7 @@ export default {
       connection_key: "",
       channel: "",
       channels: [],
+      messages: []
     }
   },
   methods:{
@@ -112,6 +112,15 @@ export default {
     },
     setChannel(selectedChannel){
       this.channel = selectedChannel
+    },
+    setMessages(){
+      firebase.database().ref("channel/"+this.channel.id+"/"+"messages").on("value", snapshot => {
+        this.messages.push(snapshot.val())
+      })
+    },
+    setChannelAndMessages(selectedChannel){
+      this.setChannel(selectedChannel);
+      this.setMessages()
     }
   },
   mounted(){

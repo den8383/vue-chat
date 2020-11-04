@@ -1,4 +1,6 @@
 <template>
+  <h2>{{messages}}</h2>
+  <messageBox :messages="messages"></messageBox>
   <div>channel</div>
   <channelCreateButton @added-channel="addChannel" databaseItem="channel"></channelCreateButton>
   <div>
@@ -18,17 +20,20 @@
 
 import channelCreateButton from '@/components/ChannelCreateButton.vue'
 import channelSelectButton from '@/components/ChannelSelectButton.vue'
+import messageBox from '@/components/MessageBox.vue'
 
 
 
 export default {
   name: "ChannelPage",
   props:{
-    channels: Array
+    channels: Array,
+    messages: Array
   },
   components:{
     channelCreateButton,
-    channelSelectButton
+    channelSelectButton,
+    messageBox
   },
   data(){
     return{
