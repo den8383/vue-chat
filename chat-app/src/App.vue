@@ -1,5 +1,5 @@
 <template>
-  {{messages}}
+  {{user.email}}
   <h2>{{channel}}</h2>
   {{connections}}
   <div id="app">
@@ -13,7 +13,7 @@
       <router-link to="workspace">work space</router-link> |
       <router-link to="channel">channel</router-link> |
     </div>
-    <router-view :user="user" :users="users" :connections="connections" :channels="channels" @selected-channel="setChannelAndMessages" @added-channel="addChannel" :messages="messages"></router-view>
+    <router-view :user="user" :users="users" :connections="connections" :channels="channels" @selected-channel="setChannelAndMessages" @added-channel="addChannel" :messages="messages" @added-message="addMessage"></router-view>
   </div>
 </template>
 
@@ -60,7 +60,8 @@ export default {
       connection_key: "",
       channel: "",
       channels: [],
-      messages: []
+      messages: [],
+      sendMessage: "hello"
     }
   },
   methods:{
@@ -114,13 +115,23 @@ export default {
       this.channel = selectedChannel
     },
     setMessages(){
-      firebase.database().ref("channel/"+this.channel.id+"/"+"messages").on("value", snapshot => {
+      firebase.database().ref("channel/"+this.channel.id+"/"+"messages").on("child_added", snapshot => {
         this.messages.push(snapshot.val())
       })
     },
     setChannelAndMessages(selectedChannel){
       this.setChannel(selectedChannel);
       this.setMessages()
+    },
+    addMessage(message){
+      alert(message)
+      firebase.database().ref("channel/"+this.channel.id+"/"+"messages")
+        .push({
+          content: message,
+          user: {
+            name: this.user.email
+        }
+      });
     }
   },
   mounted(){

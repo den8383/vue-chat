@@ -1,5 +1,6 @@
 <template>
-  <h2>{{messages}}</h2>
+  <button @click="addMessage">add</button>
+  <sendMessageBox @added-message="addMessage"></sendMessageBox>
   <messageBox :messages="messages"></messageBox>
   <div>channel</div>
   <channelCreateButton @added-channel="addChannel" databaseItem="channel"></channelCreateButton>
@@ -21,6 +22,7 @@
 import channelCreateButton from '@/components/ChannelCreateButton.vue'
 import channelSelectButton from '@/components/ChannelSelectButton.vue'
 import messageBox from '@/components/MessageBox.vue'
+import sendMessageBox from '@/components/SendMessageBox.vue'
 
 
 
@@ -33,7 +35,8 @@ export default {
   components:{
     channelCreateButton,
     channelSelectButton,
-    messageBox
+    messageBox,
+    sendMessageBox
   },
   data(){
     return{
@@ -45,6 +48,9 @@ export default {
     },
     channelSelected(selectedChannel){
       this.$emit("selected-channel", selectedChannel)
+    },
+    addMessage(message){
+      this.$emit("added-message",message)
     }
   }
 };

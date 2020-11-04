@@ -2,7 +2,7 @@
   <h2>message</h2>
   <div id="message-box">
     <ul id="message-list">
-      <li id="message-line" v-for="(message, index) in messages" :key="index">{{message[Object.keys(message)].user.name}},{{message[Object.keys(message)].content}}</li>
+      <li id="message-line" v-for="(message, index) in messages" :key="index">{{message.user.name}},{{message.content}}</li>
     </ul>
   </div>
 <!--
