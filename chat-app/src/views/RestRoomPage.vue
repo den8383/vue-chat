@@ -1,4 +1,5 @@
 <template>
+  <div v-for="(registUser,index) in channel.users" :key="index">{{registUser.user}}</div>
   {{user.email}}
   <h2>{{channel.channel_name}}</h2>
   <sendMessageBox @added-message="addMessage"></sendMessageBox>
@@ -47,7 +48,8 @@ export default {
       channel: "",
       channels: [],
       message: [],
-      messages: []
+      messages: [],
+      registUser: []
     }
   },
   methods: {
@@ -72,13 +74,23 @@ export default {
       this.channel = selectedChannel
     },
     setMessages(){
-      this.messages = []
-      firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages").on("child_added", snapshot => {
-        this.message = snapshot.val()
-      })
-      firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages").on("value", snapshot => {
-        this.messages = snapshot.val()
-      })
+      if(this.isRegistedUser(this.user)){
+        this.messages = []
+        firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages").on("child_added", snapshot => {
+          this.message = snapshot.val()
+        })
+        firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages").on("value", snapshot => {
+          this.messages = snapshot.val()
+        })
+      }
+      else{
+        this.messages = [{
+          content: "you are not registed user",
+          user:{
+            name: "not-registet",
+          }
+        }]
+      }
     },
     addMessage(message){
       firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages")
@@ -96,6 +108,17 @@ export default {
     deleteMessage(indexs){
       if(this.user.email === indexs.user){
         firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages").child(indexs.index).remove();
+      }
+    },
+    isRegistedUser(user){
+      for (var registUser in this.channel.users){
+        console.log(this.channel.users[registUser].user.name)
+        if(this.channel.users[registUser].user.name === user.email){
+          return true
+        }
+        else{
+          return false
+        }
       }
     }
   },
