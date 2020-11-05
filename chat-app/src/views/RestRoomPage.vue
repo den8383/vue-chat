@@ -1,72 +1,46 @@
 <template>
+  <h2>Rest Room</h2>
   <div>
-    <h2>Rest Room</h2>
-    <messageBox ref="messageBox" v-bind:currentChannel="channel" databaseItem="restroom" :restUsers="restUsers"></messageBox>
+    <ul>
+      <li v-for="(restRoom, index) in restRooms" :key="index">
+        <channelSelectButton @selected="restRoomSelected(restRoom)" :channel="restRoom.channel_name"></channelSelectButton>
+      </li>
+    </ul>
   </div>
-  <div id="users-and-channels">
-    <div id="users">
-      <p>user</p>
-      <usersView ref="onlineUser"></usersView>
-    </div>
-    <div id="channels">
-      <p>channel</p>
-      <channelSelector @change="changeChannel" databaseItem="restroom"></channelSelector>
-    </div>
-  </div>
+  <channelCreateButton @added-channel="addRestRoom"></channelCreateButton>
 </template>
 
 <style>
-#users-and-channels{
-  display:flex;
-  margin:auto;
-}
-#users{
-  margin:0 0 0 auto;
-}
-#channels{
-  margin:0 auto 0 0;
-  padding:0;
-}
 </style>
 
 
 <script>
 
-import messageBox from '@/components/RestRoomChat.vue'
-import usersView from '@/components/OnlineUsers.vue'
-import channelSelector from '@/components/RestRoomSelector.vue'
+import channelCreateButton from '@/components/ChannelCreateButton.vue'
+import channelSelectButton from '@/components/ChannelSelectButton.vue'
+
 
 
 export default {
-  name: "Channel",
+  name: "RestRoomPage",
+  props:{
+    restRooms: Array,
+  },
   components:{
-    messageBox,
-    usersView,
-    channelSelector,
+    channelCreateButton,
+    channelSelectButton,
   },
   data(){
     return{
-      channel: "",
-      restUsers: [],
-      message: "hello",
-
     }
   },
   methods: {
-    changeChannel(currentChannel){
-      this.channel = currentChannel
-      this.$refs.messageBox.changeChannel(this.channel)
-      this.changeOnlineUser()
-      setInterval(this.reloadChannel,1000)
+    addRestRoom(newRestRoomName){
+      this.$emit("added-restroom",newRestRoomName)
     },
-    reloadChannel(){
-      this.changeChannel(this.channel)
+    restRoomSelected(selectedRestRoom){
+      this.$emit("selected-restroom", selectedRestRoom)
     },
-    changeOnlineUser(){
-      this.restUsers = this.$refs.onlineUser.getOnlineUsers()
-    }
-  },
-  mounted(){
   }
 };
 </script>
