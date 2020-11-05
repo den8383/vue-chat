@@ -1,5 +1,5 @@
 <template>
-  {{message}}
+  {{user.email}}
   <h2>{{channel.channel_name}}</h2>
   <sendMessageBox @added-message="addMessage"></sendMessageBox>
   <messageBox :messages="messages" @delete-message="deleteMessage"></messageBox>
@@ -57,6 +57,12 @@ export default {
       newChannel.set({
         channel_name: newChannelName,
         id: key_id
+      })
+      firebase.database().ref(this.databaseItem+"/"+key_id+"/"+"users").push({
+        user: {
+          name:String(this.user.email),
+          uid:String(this.user.uid)
+        }
       })
     },
     setChannels(){
