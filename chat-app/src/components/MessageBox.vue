@@ -4,7 +4,7 @@
     <ul id="message-list">
       <li id="message-line" v-for="(message, index) in messages" :key="index">
         <span>{{message.user.name}},{{message.content}}</span>
-        <span id="delete-button" @click="deleteMessage(index)"> X</span>
+        <span id="delete-button" @click="deleteMessage(index,message.user.name)"> X</span>
       </li>
     </ul>
   </div>
@@ -65,8 +65,12 @@ export default {
     }
   },
   methods: {
-    deleteMessage(index){
-      this.$emit("delete-message",index)
+    deleteMessage(index,user){
+      var indexs = {
+        index: index,
+        user:user
+      }
+      this.$emit("delete-message",indexs)
     }
   }
 };

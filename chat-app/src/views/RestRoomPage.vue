@@ -87,8 +87,10 @@ export default {
       this.channelSelected(selectedChannel);
       this.setMessages()
     },
-    deleteMessage(index){
-      firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages").child(index).remove();
+    deleteMessage(indexs){
+      if(this.user.email === indexs.user){
+        firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages").child(indexs.index).remove();
+      }
     }
   },
   mounted(){
