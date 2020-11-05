@@ -10,7 +10,7 @@
       <router-link to="channel">channel</router-link> |
       <router-link to="rest">rest room</router-link> |
     </div>
-    <router-view :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="connections" :restRooms="restRooms" @selected-workspace="setWorkspace" @added-restroom="addRestRoom" @selected-restroom="setRestRoom"></router-view>
+    <router-view :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="connections" @selected-workspace="setWorkspace" ></router-view>
   </div>
 </template>
 
@@ -59,8 +59,6 @@ export default {
       connection_key: "",
       channel: "",
       channels: [],
-      messages: [],
-      sendMessage: "hello",
       restRoom: "",
       restRooms: []
     }
@@ -115,27 +113,12 @@ export default {
     setWorkspaces(){
       firebase.database().ref("workspace").on("value", snapshot => (this.workspaces = snapshot.val()))
     },
-    addRestRoom(newRestRoomName){
-      const newRestRoom = firebase.database().ref("restroom").push();
-      const key_id = newRestRoom.key;
-      newRestRoom.set({
-        channel_name: newRestRoomName,
-        id: key_id
-      })
-    },
-    setRestRooms(){
-      firebase.database().ref("restroom").on("value", snapshot => (this.restRooms = snapshot.val()))
-    },
-    setRestRoom(selectedRestRoom){
-      this.restRoom = selectedRestRoom
-    },
   },
   mounted(){
     this.setCurrentUser()
     this.setCurrentUsers()
     this.setWorkspaces()
     this.setConnections()
-    this.setRestRooms()
   },
   beforeUnmount(){
     this.setDisConnections()
