@@ -10,7 +10,7 @@
       <router-link to="channel">channel</router-link> |
       <router-link to="rest">rest room</router-link> |
     </div>
-    <router-view :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="connections" :channels="channels" :restRooms="restRooms" @selected-workspace="setWorkspace" @selected-channel="setChannelAndMessages" @added-channel="addChannel" @added-restroom="addRestRoom" @selected-restroom="setRestRoom" :messages="messages" @added-message="addMessage"></router-view>
+    <router-view :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="connections" :restRooms="restRooms" @selected-workspace="setWorkspace" @added-restroom="addRestRoom" @selected-restroom="setRestRoom"></router-view>
   </div>
 </template>
 

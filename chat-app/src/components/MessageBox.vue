@@ -2,7 +2,10 @@
   <h2>message</h2>
   <div id="message-box">
     <ul id="message-list">
-      <li id="message-line" v-for="(message, index) in messages" :key="index">{{message.user.name}},{{message.content}}</li>
+      <li id="message-line" v-for="(message, index) in messages" :key="index">
+        <span>{{message.user.name}},{{message.content}}</span>
+        <span id="delete-button" @click="deleteMessage(index)"> X</span>
+      </li>
     </ul>
   </div>
 <!--
@@ -33,7 +36,7 @@
 #message-list{
     text-align: left;
 }
-#message-list span{
+#delete-button{
     text-align: right;
     color: red;
 }
@@ -62,6 +65,9 @@ export default {
     }
   },
   methods: {
+    deleteMessage(index){
+      this.$emit("delete-message",index)
+    }
   }
 };
 </script>

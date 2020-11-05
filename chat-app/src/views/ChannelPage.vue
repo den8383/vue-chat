@@ -2,7 +2,7 @@
   {{message}}
   <h2>{{channel.channel_name}}</h2>
   <sendMessageBox @added-message="addMessage"></sendMessageBox>
-  <messageBox :messages="messages"></messageBox>
+  <messageBox :messages="messages" @delete-message="deleteMessage"></messageBox>
   <div>channel</div>
   <channelCreateButton @added-channel="addChannel"></channelCreateButton>
   <div>
@@ -87,6 +87,9 @@ export default {
       this.channelSelected(selectedChannel);
       this.setMessages()
     },
+    deleteMessage(index){
+      firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages").child(index).remove();
+    }
   },
   mounted(){
     this.setChannels()
