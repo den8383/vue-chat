@@ -1,5 +1,4 @@
 <template>
-  <button @click="addMessage">add</button>
   <sendMessageBox @added-message="addMessage"></sendMessageBox>
   <messageBox :messages="messages"></messageBox>
   <div>channel</div>

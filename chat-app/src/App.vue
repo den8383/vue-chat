@@ -1,9 +1,5 @@
 <template>
-  {{user.email}}
-  <h2>{{channel}}</h2>
-  {{connections}}
   <div id="app">
-    {{channels}}
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="register">Regist</router-link> |
@@ -12,8 +8,9 @@
       <router-link to="online">online</router-link> |
       <router-link to="workspace">work space</router-link> |
       <router-link to="channel">channel</router-link> |
+      <router-link to="rest">rest room</router-link> |
     </div>
-    <router-view :user="user" :users="users" :connections="connections" :channels="channels" @selected-channel="setChannelAndMessages" @added-channel="addChannel" :messages="messages" @added-message="addMessage"></router-view>
+    <router-view :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="connections" :channels="channels" :restRooms="restRooms" @selected-workspace="setWorkspace" @selected-channel="setChannelAndMessages" @added-channel="addChannel" @added-restroom="addRestRoom" @selected-restroom="setRestRoom" :messages="messages" @added-message="addMessage"></router-view>
   </div>
 </template>
 
@@ -53,6 +50,8 @@ export default {
   },
   data(){
     return {
+      workspace: "",
+      workspaces: [],
       user: "",
       users: [],
       connections: [],
@@ -61,7 +60,9 @@ export default {
       channel: "",
       channels: [],
       messages: [],
-      sendMessage: "hello"
+      sendMessage: "hello",
+      restRoom: "",
+      restRooms: []
     }
   },
   methods:{
@@ -100,6 +101,20 @@ export default {
     setDisConnections(){
       firebase.database().ref(".info/connected").off();
     },
+    setWorkspace(selectedWorkspace){
+      this.workspace = selectedWorkspace
+    },
+    addWorkspace(newWorkspaceName){
+      const newWorkspace = firebase.database().ref("workspace").push();
+      const key_id = newWorkspace.key;
+      newWorkspace.set({
+        channel_name: newWorkspaceName,
+        id: key_id
+      })
+    },
+    setWorkspaces(){
+      firebase.database().ref("workspace").on("value", snapshot => (this.workspaces = snapshot.val()))
+    },
     addChannel(newChannelName){
       const newChannel = firebase.database().ref("channel").push();
       const key_id = newChannel.key;
@@ -115,6 +130,7 @@ export default {
       this.channel = selectedChannel
     },
     setMessages(){
+      this.messages = []
       firebase.database().ref("channel/"+this.channel.id+"/"+"messages").on("child_added", snapshot => {
         this.messages.push(snapshot.val())
       })
@@ -124,7 +140,6 @@ export default {
       this.setMessages()
     },
     addMessage(message){
-      alert(message)
       firebase.database().ref("channel/"+this.channel.id+"/"+"messages")
         .push({
           content: message,
@@ -132,13 +147,29 @@ export default {
             name: this.user.email
         }
       });
-    }
+    },
+    addRestRoom(newRestRoomName){
+      const newRestRoom = firebase.database().ref("restroom").push();
+      const key_id = newRestRoom.key;
+      newRestRoom.set({
+        channel_name: newRestRoomName,
+        id: key_id
+      })
+    },
+    setRestRooms(){
+      firebase.database().ref("restroom").on("value", snapshot => (this.restRooms = snapshot.val()))
+    },
+    setRestRoom(selectedRestRoom){
+      this.restRoom = selectedRestRoom
+    },
   },
   mounted(){
     this.setCurrentUser()
     this.setCurrentUsers()
+    this.setWorkspaces()
     this.setConnections()
     this.setChannels()
+    this.setRestRooms()
   },
   beforeUnmount(){
     this.setDisConnections()

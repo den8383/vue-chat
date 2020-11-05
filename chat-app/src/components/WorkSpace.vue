@@ -36,7 +36,7 @@
 
 
 export default {
-  name: "messageBox",
+  name: "workspace",
   props:{
   },
   data() {

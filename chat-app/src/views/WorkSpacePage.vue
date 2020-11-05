@@ -1,7 +1,13 @@
 <template>
+  <h2>Work Space</h2>
   <div>
-    <workSpace></workSpace>
+    <ul>
+      <li v-for="(workspace, index) in workspaces" :key="index">
+        <channelSelectButton @selected="workspaceSelected(workspace)" :channel="workspace.channel_name"></channelSelectButton>
+      </li>
+    </ul>
   </div>
+  <channelCreateButton @added-channel="addWorkspace"></channelCreateButton>
 </template>
 
 <style>
@@ -10,14 +16,31 @@
 
 <script>
 
-import workSpace from '@/components/WorkSpace.vue'
+import channelCreateButton from '@/components/ChannelCreateButton.vue'
+import channelSelectButton from '@/components/ChannelSelectButton.vue'
 
 
 
 export default {
-  name: "workSpacePage",
-  components:{
-    workSpace
+  name: "WorksapcePage",
+  props:{
+    workspaces: Array,
   },
+  components:{
+    channelCreateButton,
+    channelSelectButton,
+  },
+  data(){
+    return{
+    }
+  },
+  methods: {
+    addWorkspace(newWorkspaceName){
+      this.$emit("added-workspace",newWorkspaceName)
+    },
+    workspaceSelected(selectedWorkspace){
+      this.$emit("selected-workspace", selectedWorkspace)
+    },
+  }
 };
 </script>

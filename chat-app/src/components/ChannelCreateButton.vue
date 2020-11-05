@@ -25,7 +25,6 @@
 export default {
   name: "channelCreateButton",
   props:{
-    databaseItem: String
   },
   data() {
     return {
