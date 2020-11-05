@@ -115,39 +115,6 @@ export default {
     setWorkspaces(){
       firebase.database().ref("workspace").on("value", snapshot => (this.workspaces = snapshot.val()))
     },
-    addChannel(newChannelName){
-      const newChannel = firebase.database().ref("channel").push();
-      const key_id = newChannel.key;
-      newChannel.set({
-        channel_name: newChannelName,
-        id: key_id
-      })
-    },
-    setChannels(){
-      firebase.database().ref("channel").on("value", snapshot => (this.channels = snapshot.val()))
-    },
-    setChannel(selectedChannel){
-      this.channel = selectedChannel
-    },
-    setMessages(){
-      this.messages = []
-      firebase.database().ref("channel/"+this.channel.id+"/"+"messages").on("child_added", snapshot => {
-        this.messages.push(snapshot.val())
-      })
-    },
-    setChannelAndMessages(selectedChannel){
-      this.setChannel(selectedChannel);
-      this.setMessages()
-    },
-    addMessage(message){
-      firebase.database().ref("channel/"+this.channel.id+"/"+"messages")
-        .push({
-          content: message,
-          user: {
-            name: this.user.email
-        }
-      });
-    },
     addRestRoom(newRestRoomName){
       const newRestRoom = firebase.database().ref("restroom").push();
       const key_id = newRestRoom.key;
@@ -168,7 +135,6 @@ export default {
     this.setCurrentUsers()
     this.setWorkspaces()
     this.setConnections()
-    this.setChannels()
     this.setRestRooms()
   },
   beforeUnmount(){

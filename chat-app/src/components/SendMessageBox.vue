@@ -18,6 +18,7 @@ export default{
   methods: {
     addMessage(){
       this.$emit("added-message", this.sendMessage)
+      this.sendMessage = ""
     }
   }
 }

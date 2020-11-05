@@ -1,12 +1,14 @@
 <template>
+  {{message}}
+  <h2>{{channel.channel_name}}</h2>
   <sendMessageBox @added-message="addMessage"></sendMessageBox>
   <messageBox :messages="messages"></messageBox>
   <div>channel</div>
-  <channelCreateButton @added-channel="addChannel" databaseItem="channel"></channelCreateButton>
+  <channelCreateButton @added-channel="addChannel"></channelCreateButton>
   <div>
     <ul>
       <li v-for="(channel, index) in channels" :key="index">
-        <channelSelectButton @selected="channelSelected(channel)" :channel="channel.channel_name"></channelSelectButton>
+        <channelSelectButton @selected="selectedChannelAndMessages(channel)" :channel="channel.channel_name"></channelSelectButton>
       </li>
     </ul>
   </div>
@@ -18,6 +20,9 @@
 
 <script>
 
+import firebase from "firebase/app";
+import "firebase/auth";
+
 import channelCreateButton from '@/components/ChannelCreateButton.vue'
 import channelSelectButton from '@/components/ChannelSelectButton.vue'
 import messageBox from '@/components/MessageBox.vue'
@@ -28,8 +33,7 @@ import sendMessageBox from '@/components/SendMessageBox.vue'
 export default {
   name: "ChannelPage",
   props:{
-    channels: Array,
-    messages: Array
+    user: Object,
   },
   components:{
     channelCreateButton,
@@ -39,18 +43,53 @@ export default {
   },
   data(){
     return{
+      databaseItem: "channel",
+      channel: "",
+      channels: [],
+      message: [],
+      messages: []
     }
   },
   methods: {
     addChannel(newChannelName){
-      this.$emit("added-channel",newChannelName)
+      const newChannel = firebase.database().ref(this.databaseItem).push();
+      const key_id = newChannel.key;
+      newChannel.set({
+        channel_name: newChannelName,
+        id: key_id
+      })
+    },
+    setChannels(){
+      firebase.database().ref(this.databaseItem).on("value", snapshot => (this.channels = snapshot.val()))
     },
     channelSelected(selectedChannel){
-      this.$emit("selected-channel", selectedChannel)
+      this.channel = selectedChannel
+    },
+    setMessages(){
+      this.messages = []
+      firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages").on("child_added", snapshot => {
+        this.message = snapshot.val()
+      })
+      firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages").on("value", snapshot => {
+        this.messages = snapshot.val()
+      })
     },
     addMessage(message){
-      this.$emit("added-message",message)
-    }
+      firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"messages")
+        .push({
+          content: message,
+          user: {
+            name: this.user.email
+        }
+      });
+    },
+    selectedChannelAndMessages(selectedChannel){
+      this.channelSelected(selectedChannel);
+      this.setMessages()
+    },
+  },
+  mounted(){
+    this.setChannels()
   }
 };
 </script>
