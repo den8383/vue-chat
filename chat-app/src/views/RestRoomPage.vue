@@ -1,4 +1,6 @@
 <template>
+  <button @click="reloadChannel">reload</button>
+  {{channel.id}}
   <div v-for="(registUser,index) in channel.users" :key="index">{{registUser.user}}</div>
   {{user.email}}
   <h2>{{channel.channel_name}}</h2>
@@ -13,6 +15,8 @@
       </li>
     </ul>
   </div>
+  <onlineUsersButton @invite="inviteUser" :users="users" :connections="connections"></onlineUsersButton>
+  <channelEntryButton @input-channel-id="entryChannel"></channelEntryButton>
 </template>
 
 <style>
@@ -28,19 +32,24 @@ import channelCreateButton from '@/components/ChannelCreateButton.vue'
 import channelSelectButton from '@/components/ChannelSelectButton.vue'
 import messageBox from '@/components/MessageBox.vue'
 import sendMessageBox from '@/components/SendMessageBox.vue'
-
+import channelEntryButton from '@/components/ChannelEntryButton.vue'
+import onlineUsersButton from '@/components/OnlineUsersButton.vue'
 
 
 export default {
   name: "RestRoomPage",
   props:{
     user: Object,
+    users: Object,
+    connections: Object
   },
   components:{
     channelCreateButton,
     channelSelectButton,
     messageBox,
-    sendMessageBox
+    sendMessageBox,
+    channelEntryButton,
+    onlineUsersButton
   },
   data(){
     return{
@@ -67,11 +76,23 @@ export default {
         }
       })
     },
+    inviteUser(user){
+      firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"users").push({
+        user: {
+          name:String(user.email),
+          uid:String(user.uid)
+        }
+      })
+      this.reloadChannel()
+    },
     setChannels(){
       firebase.database().ref(this.databaseItem).on("value", snapshot => (this.channels = snapshot.val()))
     },
     channelSelected(selectedChannel){
       this.channel = selectedChannel
+    },
+    reloadChannel(){
+      this.channel = this.channels[this.channel.id]
     },
     setMessages(){
       if(this.isRegistedUser(this.user)){
@@ -116,10 +137,8 @@ export default {
         if(this.channel.users[registUser].user.name === user.email){
           return true
         }
-        else{
-          return false
-        }
       }
+      return false
     }
   },
   mounted(){
