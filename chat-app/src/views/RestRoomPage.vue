@@ -78,13 +78,18 @@ export default {
       })
     },
     inviteUser(user){
-      firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"users").push({
-        user: {
-          name:String(user.email),
-          uid:String(user.user_id)
-        }
-      })
-      this.reloadChannel()
+      if(this.isRegistedUser(this.user)){
+        firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"users").push({
+          user: {
+            name:String(user.email),
+            uid:String(user.user_id)
+          }
+        })
+        this.reloadChannel()
+      }
+      else {
+        console.log("you are not invited")
+      }
     },
     canselInvitation(index){
       firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"users").child(index).remove()
