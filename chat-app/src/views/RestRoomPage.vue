@@ -1,7 +1,8 @@
 <template>
   <button @click="reloadChannel">reload</button>
   {{channel.id}}
-  <div v-for="(registUser,index) in channel.users" :key="index">{{registUser.user}}</div>
+  <div v-for="(registUser,index) in channel.users" :key="index">{{registUser.user}}<button @click="canselInvitation(index)">cansel</button>
+  </div>
   {{user.email}}
   <h2>{{channel.channel_name}}</h2>
   <sendMessageBox @added-message="addMessage"></sendMessageBox>
@@ -80,9 +81,13 @@ export default {
       firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"users").push({
         user: {
           name:String(user.email),
-          uid:String(user.uid)
+          uid:String(user.user_id)
         }
       })
+      this.reloadChannel()
+    },
+    canselInvitation(index){
+      firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"users").child(index).remove()
       this.reloadChannel()
     },
     setChannels(){
