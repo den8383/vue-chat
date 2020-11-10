@@ -54,7 +54,7 @@ export default {
     },
     inviteThisUser(user){
       this.$emit("invite",user)
-    }
+    },
   },
 };
 </script>
