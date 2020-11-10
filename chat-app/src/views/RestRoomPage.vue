@@ -1,9 +1,6 @@
 <template>
-  <button @click="reloadChannel">reload</button>
-  {{channel.id}}
-  <div v-for="(registUser,index) in channel.users" :key="index">{{registUser.user}}<button @click="canselInvitation(index)">cansel</button>
+  <div v-for="(registUser,index) in channel.users" :key="index">{{registUser.user.name}}<button @click="canselInvitation(index)">cansel</button>
   </div>
-  {{user.email}}
   <h2>{{channel.channel_name}}</h2>
   <sendMessageBox @added-message="addMessage"></sendMessageBox>
   <messageBox :messages="messages" @delete-message="deleteMessage"></messageBox>
@@ -17,7 +14,6 @@
     </ul>
   </div>
   <onlineUsersButton @invite="inviteUser" :users="users" :connections="connections"></onlineUsersButton>
-  <channelEntryButton @input-channel-id="entryChannel"></channelEntryButton>
 </template>
 
 <style>
@@ -33,7 +29,6 @@ import channelCreateButton from '@/components/ChannelCreateButton.vue'
 import channelSelectButton from '@/components/ChannelSelectButton.vue'
 import messageBox from '@/components/MessageBox.vue'
 import sendMessageBox from '@/components/SendMessageBox.vue'
-import channelEntryButton from '@/components/ChannelEntryButton.vue'
 import onlineUsersButton from '@/components/OnlineUsersButton.vue'
 
 
@@ -49,7 +44,6 @@ export default {
     channelSelectButton,
     messageBox,
     sendMessageBox,
-    channelEntryButton,
     onlineUsersButton
   },
   data(){
