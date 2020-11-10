@@ -29,12 +29,30 @@ const routes = [
   {
     path: '/channel',
     name: 'Channel',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ChannelPage.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/ChannelPage.vue'),
+    beforeEnter: (to, from, next) => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          next()
+        } else {
+          next("/signin")
+        }
+      });
+    }
   },
   {
     path: '/rest',
     name: 'RestRoom',
-    component: () => import(/* webpackChunkName: "about" */ '../views/RestRoomPage.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/RestRoomPage.vue'),
+    beforeEnter: (to, from, next) => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          next()
+        } else {
+          next("/signin")
+        }
+      });
+    }
   },
   {
     path: '/about',
@@ -66,12 +84,30 @@ const routes = [
   {
     path: '/signout',
     name: 'Signout',
-    component: () => import(/* webpackChunkName: "about" */ '../views/SignoutPage.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/SignoutPage.vue'),
+    beforeEnter: (to, from, next) => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          next()
+        } else {
+          next("/signin")
+        }
+      });
+    }
   },
   {
     path: '/online',
     name: 'online',
-    component: () => import(/* webpackChunkName: "about" */ '../views/OnlineUsersPage.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/OnlineUsersPage.vue'),
+    beforeEnter: (to, from, next) => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          next()
+        } else {
+          next("/signin")
+        }
+      });
+    }
   },
   {
     path: '/workspace',
