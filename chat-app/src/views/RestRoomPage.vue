@@ -78,7 +78,7 @@ export default {
       })
     },
     inviteUser(user){
-      if(this.isRegistedUser(this.user)){
+      if(this.isRegistedUser(this.user) & this.isNotDuplicate(user)){
         firebase.database().ref(this.databaseItem+"/"+this.channel.id+"/"+"users").push({
           user: {
             name:String(user.email),
@@ -149,6 +149,15 @@ export default {
         }
       }
       return false
+    },
+    isNotDuplicate(user){
+      var duplicationFlug = false
+      for (var registUser in this.channel.users){
+        if(this.channel.users[registUser].user.name === user.email){
+          duplicationFlug = true
+        }
+      }
+      return !duplicationFlug
     }
   },
   mounted(){
