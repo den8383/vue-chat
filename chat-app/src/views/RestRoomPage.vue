@@ -13,6 +13,7 @@
       </li>
     </ul>
   </div>
+  <restRoom :restUsers="channel.users" :message="message"></restRoom>
   <onlineUsersButton @invite="inviteUser" :users="users" :connections="connections"></onlineUsersButton>
 </template>
 
@@ -30,6 +31,7 @@ import channelSelectButton from '@/components/ChannelSelectButton.vue'
 import messageBox from '@/components/MessageBox.vue'
 import sendMessageBox from '@/components/SendMessageBox.vue'
 import onlineUsersButton from '@/components/OnlineUsersButton.vue'
+import restRoom from '@/components/RestRoom.vue'
 
 
 export default {
@@ -44,7 +46,8 @@ export default {
     channelSelectButton,
     messageBox,
     sendMessageBox,
-    onlineUsersButton
+    onlineUsersButton,
+    restRoom
   },
   data(){
     return{

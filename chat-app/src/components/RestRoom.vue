@@ -1,6 +1,6 @@
 <template>
   <div class="room-group">
-    <singleRoom  v-for="(restUser, index) in restUsers" :key="index" :restUser="restUser" :message="message" :messager="messager"></singleRoom>
+    <singleRoom  v-for="(restUser, index) in restUsers" :key="index" :restUser="restUser" :message="message"></singleRoom>
   </div>
 </template>
 
@@ -12,7 +12,7 @@
 }
 @media screen and (min-width:768px){
   .room-group{
-    width:30%;
+    width:49%;
   }
 }
 </style>
@@ -27,8 +27,7 @@ export default {
   name: "restRoom",
   props: {
     restUsers: Array,
-    message:String,
-    messager:String,
+    message: Object,
   },
   components:{
     singleRoom
