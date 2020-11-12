@@ -1,6 +1,6 @@
 <template>
   <div>
-      <register :workspace="workspace"></register>
+    <register :workspace="workspace"></register>
   </div>
 </template>
 

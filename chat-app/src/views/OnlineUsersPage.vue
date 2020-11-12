@@ -1,4 +1,5 @@
 <template>
+  {{connections}}
   <div>
     <onlineUsers :users="users" :connections="connections"></onlineUsers>
   </div>

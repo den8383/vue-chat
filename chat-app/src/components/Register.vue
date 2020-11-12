@@ -1,5 +1,4 @@
 <template>
-  {{workspace.id}}
   <h1>regist</h1>
   <form @submit.prevent="registerUser">
     <div>
@@ -22,9 +21,6 @@ import "firebase/auth";
 
 export default {
   name: "register",
-  props: {
-    workspace:Object
-  },
   data() {
     return {
       email: "",
@@ -34,9 +30,10 @@ export default {
   },
   methods: {
     registerUser(){
+      alert(this.email+" "+this.password)
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(response => {
         const user = response.user;
-        firebase.database().ref("workspace/" + this.workspace.id + "/users").child(user.uid).set({
+        firebase.database().ref("users").child(user.uid).set({
           user_id:user.uid,
           email: user.email
         }).then(() => {

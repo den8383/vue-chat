@@ -1,4 +1,5 @@
 <template>
+  <button @click="setCurrentUsers">user</button>
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -70,7 +71,7 @@ export default {
       });
     },
     setCurrentUsers(){
-      firebase.database().ref("users").on("child_added", snapshot => {
+      firebase.database().ref("workspace/" + this.workspace.id + "/users").on("child_added", snapshot => {
         this.users.push(snapshot.val());
       });
     },
@@ -111,7 +112,9 @@ export default {
       })
     },
     setWorkspaces(){
-      firebase.database().ref("workspace").on("value", snapshot => (this.workspaces = snapshot.val()))
+      firebase.database().ref("workspace").on("value", snapshot => {
+        this.workspaces = snapshot.val()
+      })
     },
   },
   mounted(){
