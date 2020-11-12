@@ -10,7 +10,7 @@
       <router-link to="channel">channel</router-link> |
       <router-link to="rest">rest room</router-link> |
     </div>
-    <router-view :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="connections" @selected-workspace="setWorkspace" ></router-view>
+    <router-view :workspace="workspace" :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="connections" @selected-workspace="setWorkspace" ></router-view>
   </div>
 </template>
 
