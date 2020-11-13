@@ -30,7 +30,6 @@ export default {
   },
   methods: {
     registerUser(){
-      alert(this.email+" "+this.password)
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(response => {
         const user = response.user;
         firebase.database().ref("users").child(user.uid).set({
