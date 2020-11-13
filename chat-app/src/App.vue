@@ -1,6 +1,4 @@
 <template>
-  {{workspaceConnections}}
-  <h2>{{isRegistedUserInWorkspace(user)}}</h2>
   <button @click="setCurrentUsers">user</button>
   <div id="app">
     <div id="nav">
@@ -8,7 +6,7 @@
       <router-link to="register">Regist</router-link> |
       <router-link to="signin">Sign In</router-link> |
       <router-link to="signout">Sign Out</router-link> |
-      <router-link to="workspace">work space</router-link> |
+      <router-link to="workspace">Haunt</router-link> |
     </div>
     <div id="nav">
       <router-link to="online">online</router-link> |

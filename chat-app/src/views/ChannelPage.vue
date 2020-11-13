@@ -1,5 +1,4 @@
 <template>
-  {{message}}
   <h2>{{channel.channel_name}}</h2>
   <sendMessageBox @added-message="addMessage"></sendMessageBox>
   <messageBox :messages="messages" @delete-message="deleteMessage"></messageBox>

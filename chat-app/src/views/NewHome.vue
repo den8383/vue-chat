@@ -2,9 +2,7 @@
   <div>
     <p>home</p>
   </div>
-  <div>{{user}}</div>
-  <p>------------------------</p>
-  <div>{{users}}</div>
+  <div>you: {{user.email}}</div>
 </template>
 
 
