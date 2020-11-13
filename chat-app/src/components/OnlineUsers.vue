@@ -1,8 +1,7 @@
 <template>
-  {}
+  <h2>users</h2>
   <div v-for="user in users" :key="user.user_id">
     <div v-if="isOnline(user,connections)">
-      <h2>flag: {{isOnline(user,connections)}}</h2>
       <span>{{user.email}}</span>
       <span :class="isOnline(user,connections) ? 'online-icon' : 'offline-icon'"></span>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <h2>Work Space</h2>
+  <h2>Haunt</h2>
   <div>
     <ul>
       <li v-for="(workspace, index) in workspaces" :key="index">
