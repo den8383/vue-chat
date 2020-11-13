@@ -1,5 +1,4 @@
 <template>
-  <h2>{{restUsers}}</h2>
   <div v-for="(registUser,index) in channel.users" :key="index">{{registUser.user.name}}<button @click="canselInvitation(index)">cansel</button>
   </div>
   <h2>{{channel.channel_name}}</h2>
@@ -75,6 +74,16 @@ export default {
           uid:String(this.user.uid)
         }
       })
+
+      firebase.database().ref(this.databaseItem+"/"+key_id+"/"+"messages")
+        .push({
+          content: "Let's talk",
+          user: {
+            name: this.user.email
+        }
+      });
+
+
     },
     inviteUser(user){
       if(this.isRegistedUser(this.user) & this.isNotDuplicate(user)){
@@ -114,12 +123,13 @@ export default {
         })
       }
       else{
-        this.messages = [{
+        this.message = {
           content: "you are not registed user",
           user:{
             name: "not-registet",
           }
-        }]
+        }
+        this.messages = [this.message]
       }
     },
     addMessage(message){
