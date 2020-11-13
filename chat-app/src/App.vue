@@ -1,5 +1,4 @@
 <template>
-  <button @click="setCurrentUsers">user</button>
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
