@@ -8,6 +8,7 @@
     </ul>
   </div>
   <channelCreateButton @added-channel="addWorkspace"></channelCreateButton>
+  <register :workspace="workspace" :user="user"></register>
 </template>
 
 <style>
@@ -19,16 +20,20 @@
 import channelCreateButton from '@/components/ChannelCreateButton.vue'
 import channelSelectButton from '@/components/ChannelSelectButton.vue'
 
+import register from '@/components/WorkSpaceRegister.vue'
 
 
 export default {
   name: "WorksapcePage",
   props:{
     workspaces: Array,
+    workspace: Object,
+    user: Object
   },
   components:{
     channelCreateButton,
     channelSelectButton,
+    register
   },
   data(){
     return{

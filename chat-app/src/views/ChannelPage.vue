@@ -34,6 +34,7 @@ export default {
   name: "ChannelPage",
   props:{
     user: Object,
+    workspace: Object
   },
   components:{
     channelCreateButton,
@@ -43,7 +44,7 @@ export default {
   },
   data(){
     return{
-      databaseItem: "channel",
+      databaseItem: "workspace/" + this.workspace.id + "/channel",
       channel: "",
       channels: [],
       message: [],

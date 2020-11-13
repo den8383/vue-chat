@@ -1,16 +1,21 @@
 <template>
+  {{workspaceConnections}}
+  <h2>{{isRegistedUserInWorkspace(user)}}</h2>
+  <button @click="setCurrentUsers">user</button>
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="register">Regist</router-link> |
       <router-link to="signin">Sign In</router-link> |
       <router-link to="signout">Sign Out</router-link> |
-      <router-link to="online">online</router-link> |
       <router-link to="workspace">work space</router-link> |
+    </div>
+    <div id="nav">
+      <router-link to="online">online</router-link> |
       <router-link to="channel">channel</router-link> |
       <router-link to="rest">rest room</router-link> |
     </div>
-    <router-view :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="connections" @selected-workspace="setWorkspace" ></router-view>
+    <router-view :workspace="workspace" :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="workspaceConnections" @selected-workspace="setWorkspace" ></router-view>
   </div>
 </template>
 
@@ -55,6 +60,7 @@ export default {
       user: "",
       users: [],
       connections: [],
+      workspaceConnections: [],
       connectionRef: firebase.database().ref("connections"),
       connection_key: "",
       channel: "",
@@ -70,7 +76,8 @@ export default {
       });
     },
     setCurrentUsers(){
-      firebase.database().ref("users").on("child_added", snapshot => {
+      this.users = []
+      firebase.database().ref("workspace/" + this.workspace.id + "/users").on("child_added", snapshot => {
         this.users.push(snapshot.val());
       });
     },
@@ -96,11 +103,22 @@ export default {
         }
       })
     },
+    setConnectionsInWorkspace(){
+      if(this.isRegistedUserInWorkspace(this.user)){
+        this.workspaceConnections = this.connections
+      }
+      else{
+        this.workspaceConnections = []
+      }
+    }
+    ,
     setDisConnections(){
       firebase.database().ref(".info/connected").off();
     },
     setWorkspace(selectedWorkspace){
       this.workspace = selectedWorkspace
+      this.setCurrentUsers()
+      this.setConnectionsInWorkspace()
     },
     addWorkspace(newWorkspaceName){
       const newWorkspace = firebase.database().ref("workspace").push();
@@ -111,7 +129,18 @@ export default {
       })
     },
     setWorkspaces(){
-      firebase.database().ref("workspace").on("value", snapshot => (this.workspaces = snapshot.val()))
+      firebase.database().ref("workspace").on("value", snapshot => {
+        this.workspaces = snapshot.val()
+      })
+    },
+    isRegistedUserInWorkspace(user){
+      for (var registUser in this.workspace.users){
+        console.log(this.workspace.users[registUser].email)
+        if(this.workspace.users[registUser].email === user.email){
+          return true
+        }
+      }
+      return false
     },
   },
   mounted(){

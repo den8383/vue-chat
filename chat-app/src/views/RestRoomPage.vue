@@ -39,7 +39,8 @@ export default {
   props:{
     user: Object,
     users: Object,
-    connections: Object
+    connections: Object,
+    workspace: Object
   },
   components:{
     channelCreateButton,
@@ -47,11 +48,11 @@ export default {
     messageBox,
     sendMessageBox,
     onlineUsersButton,
-    restRoom
+    restRoom,
   },
   data(){
     return{
-      databaseItem: "restroom",
+      databaseItem: "workspace/" + this.workspace.id + "/restroom",
       channel: "",
       channels: [],
       message: [],
@@ -73,6 +74,16 @@ export default {
           uid:String(this.user.uid)
         }
       })
+
+      firebase.database().ref(this.databaseItem+"/"+key_id+"/"+"messages")
+        .push({
+          content: "Let's talk",
+          user: {
+            name: this.user.email
+        }
+      });
+
+
     },
     inviteUser(user){
       if(this.isRegistedUser(this.user) & this.isNotDuplicate(user)){
@@ -96,7 +107,20 @@ export default {
       firebase.database().ref(this.databaseItem).on("value", snapshot => (this.channels = snapshot.val()))
     },
     channelSelected(selectedChannel){
-      this.channel = selectedChannel
+        this.channel = selectedChannel
+      if(this.isRegistedUser(this.user)){
+        this.channel = selectedChannel
+      }
+      else{
+        this.message = {
+          content: "you are not registed user",
+          user:{
+            name: "not-registet",
+          }
+        }
+        this.channel = ""
+        this.messages = [this.message]
+      }
     },
     reloadChannel(){
       this.channel = this.channels[this.channel.id]
@@ -112,12 +136,13 @@ export default {
         })
       }
       else{
-        this.messages = [{
+        this.message = {
           content: "you are not registed user",
           user:{
             name: "not-registet",
           }
-        }]
+        }
+        this.messages = [this.message]
       }
     },
     addMessage(message){

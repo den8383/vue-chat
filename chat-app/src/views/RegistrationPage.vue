@@ -1,6 +1,6 @@
 <template>
   <div>
-      <register></register>
+    <register :workspace="workspace"></register>
   </div>
 </template>
 
@@ -16,6 +16,9 @@ import register from '@/components/Register.vue'
 
 export default {
   name: "RegistrationPage",
+  props:{
+    workspace: String
+  },
   components:{
     register
   },
