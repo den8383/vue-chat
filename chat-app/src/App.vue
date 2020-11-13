@@ -1,5 +1,5 @@
 <template>
-  {{workspace.users}}
+  {{workspaceConnections}}
   <h2>{{isRegistedUserInWorkspace(user)}}</h2>
   <button @click="setCurrentUsers">user</button>
   <div id="app">
@@ -15,7 +15,7 @@
       <router-link to="channel">channel</router-link> |
       <router-link to="rest">rest room</router-link> |
     </div>
-    <router-view :workspace="workspace" :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="connections" @selected-workspace="setWorkspace" ></router-view>
+    <router-view :workspace="workspace" :workspaces="workspaces" @added-workspace="addWorkspace" :user="user" :users="users" :connections="workspaceConnections" @selected-workspace="setWorkspace" ></router-view>
   </div>
 </template>
 
@@ -106,6 +106,9 @@ export default {
     setConnectionsInWorkspace(){
       if(this.isRegistedUserInWorkspace(this.user)){
         this.workspaceConnections = this.connections
+      }
+      else{
+        this.workspaceConnections = []
       }
     }
     ,

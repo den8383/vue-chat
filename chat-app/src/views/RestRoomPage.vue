@@ -1,4 +1,5 @@
 <template>
+  <h2>{{restUsers}}</h2>
   <div v-for="(registUser,index) in channel.users" :key="index">{{registUser.user.name}}<button @click="canselInvitation(index)">cansel</button>
   </div>
   <h2>{{channel.channel_name}}</h2>

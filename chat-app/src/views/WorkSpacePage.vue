@@ -1,6 +1,4 @@
 <template>
-  {{workspace}}
-  {{user.uid}}
   <h2>Work Space</h2>
   <div>
     <ul>

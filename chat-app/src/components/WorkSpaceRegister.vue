@@ -1,7 +1,7 @@
 <template>
   <h2>workreg</h2>
-  {{workspace.id}}
   <form @submit.prevent="registerUser(user)">
+    {{workspace.channel_name}}
     <button type="submit">Regist</button>
   </form>
 </template>
