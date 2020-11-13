@@ -39,7 +39,8 @@ export default {
   props:{
     user: Object,
     users: Object,
-    connections: Object
+    connections: Object,
+    workspace: Object
   },
   components:{
     channelCreateButton,
@@ -47,11 +48,11 @@ export default {
     messageBox,
     sendMessageBox,
     onlineUsersButton,
-    restRoom
+    restRoom,
   },
   data(){
     return{
-      databaseItem: "restroom",
+      databaseItem: "workspace/" + this.workspace.id + "/restroom",
       channel: "",
       channels: [],
       message: [],
