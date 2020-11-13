@@ -107,7 +107,20 @@ export default {
       firebase.database().ref(this.databaseItem).on("value", snapshot => (this.channels = snapshot.val()))
     },
     channelSelected(selectedChannel){
-      this.channel = selectedChannel
+        this.channel = selectedChannel
+      if(this.isRegistedUser(this.user)){
+        this.channel = selectedChannel
+      }
+      else{
+        this.message = {
+          content: "you are not registed user",
+          user:{
+            name: "not-registet",
+          }
+        }
+        this.channel = ""
+        this.messages = [this.message]
+      }
     },
     reloadChannel(){
       this.channel = this.channels[this.channel.id]
