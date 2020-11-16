@@ -53,7 +53,12 @@ const routes = [
     beforeEnter: (to, from, next) => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          next()
+          if(store.state.workspaceFlag === 1){
+            next()
+          }
+          else{
+            next("/workspace")
+          }
         } else {
           next("/signin")
         }
@@ -108,7 +113,12 @@ const routes = [
     beforeEnter: (to, from, next) => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          next()
+          if(store.state.workspaceFlag === 1){
+            next()
+          }
+          else{
+            next("/workspace")
+          }
         } else {
           next("/signin")
         }
