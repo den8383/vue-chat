@@ -4,10 +4,10 @@ WORKDIR /usr/src/app
 
 
 RUN apk update 
-RUN npm install -g npm  
-RUN npm install -g @vue/cli
+RUN npm install npm  
+RUN npm install @vue/cli
 
-RUN npm install -g firebase-tools
+RUN npm install firebase-tools
 
 USER node
 
