@@ -22,6 +22,7 @@ import channelSelectButton from '@/components/ChannelSelectButton.vue'
 
 import register from '@/components/WorkSpaceRegister.vue'
 
+import store from '@/store'
 
 export default {
   name: "WorksapcePage",
@@ -44,6 +45,7 @@ export default {
       this.$emit("added-workspace",newWorkspaceName)
     },
     workspaceSelected(selectedWorkspace){
+      store.commit('workspaceFlagUp')
       this.$emit("selected-workspace", selectedWorkspace)
     },
   }

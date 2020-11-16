@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import firebase from "firebase/app";
 import "firebase/auth";
+import store from '@/store'
 
 
 
@@ -33,7 +34,12 @@ const routes = [
     beforeEnter: (to, from, next) => {
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          next()
+          if(store.state.workspaceFlag === 1){
+            next()
+          }
+          else{
+            next("/workspace")
+          }
         } else {
           next("/signin")
         }
@@ -65,7 +71,7 @@ const routes = [
   {
     path: '/register',
     name: 'Register',
-    component: () => import(/* webpackChunkName: "about" */ '../views/RegistrationPage.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/RegistrationPage.vue'),
   },
   {
     path: '/signin',
